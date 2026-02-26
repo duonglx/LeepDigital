@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEEP Digital Inflow - Data Flow</title>
+    <script src="js/tailwindcss.min.js"></script>
+    <link rel="stylesheet" href="css/all.min.css">
+    <script src="js/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: false, htmlLabels: true },
+            sequence: { useMaxWidth: false }
+        });
+    </script>
+    <style>
+        .mermaid svg {
+            min-width: 1200px;
+            height: auto !important;
+            margin: 0 auto;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans p-0 m-0 w-full h-screen overflow-hidden">
+    <div class="w-full h-full overflow-auto fade-in p-4 xl:p-8">
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 w-max min-w-full flex justify-center">
+            <pre class="mermaid w-max">
+sequenceDiagram
+    autonumber
+    actor Referrer as Referrer (SOL User)
+    actor Prospect as Referred Prospect
+    participant SOL as Mobile App (SOL)
+    participant LP as Landing Page (Web)
+    participant VCRM as CRM (VCRM)
+    participant Core as Core Banking (AITHER)
+    participant ZNS as ZNS/SMS Gateway
+    participant TS as Telesale (HO)
+    participant RM as Branch RM
+    participant PBD as Rule Engine / PBD
+
+    Referrer->>SOL: Request Referral QR
+    SOL->>Core: Request CIF & Encrypt
+    Core-->>SOL: Return Encrypted CIF Token
+    SOL-->>Referrer: Display Static Digital QR & Link
+    Referrer->>Prospect: Share QR / Link via Ott (Zalo, FB)
+    Prospect->>LP: Scan QR & Access
+    LP->>LP: Decrypt Token (Backend internal process)
+    Prospect->>LP: Fill Form & Submit (Anti-bot check)
+    
+    rect rgb(235, 245, 255)
+        Note right of LP: Backend Processing
+        LP->>VCRM: Push Lead Data (Include Referrer CIF)
+        LP->>ZNS: Trigger Notifications
+        ZNS-->>Referrer: "Referral successful" message
+        ZNS-->>Prospect: "Service requested" message
+    end
+
+    VCRM->>TS: Auto-route to Telesale Pool
+    Note over TS,VCRM: Status: "New Lead"
+    TS->>Prospect: Call to enrich data & confirm needs
+    TS->>VCRM: Update details & map to target Branch
+    
+    VCRM->>RM: Route to Branch Manager -> Assign RM
+    Note over RM,VCRM: Status: "Processing"
+    RM->>Prospect: Meet & collect documents (POS/Loan)
+    RM->>VCRM: Update Status (Closed Won)
+    
+    rect rgb(235, 255, 240)
+        Note right of Core: Commission Payout
+        PBD->>VCRM: Query "Closed Won" Leads periodically
+        PBD->>PBD: Calculate Commission by Product
+        PBD->>Core: Credit Commission to Referrer's CASA
+        PBD->>ZNS: Send Reward Notification
+    end
+            </pre>
+        </div>
+    </div>
+</body>
+
+</html>

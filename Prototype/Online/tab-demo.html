@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEEP Digital Inflow - Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .device-frame {
+            border: 12px solid #1f2937;
+            border-radius: 36px;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 24px;
+            background: #1f2937;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 50;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border-left-color: #0046cd;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .ios-notif {
+            position: absolute;
+            top: 26px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-150%);
+            width: 92%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            padding: 12px 14px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .ios-notif.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans p-4">
+
+    <div class="max-w-[1440px] mx-auto fade-in">
+        <div class="flex flex-col xl:flex-row gap-8 items-start justify-center">
+
+            <!-- PANEL 1: SOL APP -->
+            <div class="flex flex-col items-center w-full xl:w-1/4 min-w-[320px]">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700"><i class="fa-solid fa-mobile-screen mr-2"></i>1.
+                    SOL App (Referrer)</h2>
+
+                <div class="device-frame w-full h-[650px] flex flex-col hide-scrollbar overflow-hidden relative">
+                    <div class="notch"></div>
+
+                    <!-- iOS Notification (SOL App) -->
+                    <div id="solNotif" class="ios-notif">
+                        <div
+                            class="w-9 h-9 rounded-lg shadow-sm border flex items-center justify-center shrink-0 bg-blue-600">
+                            <i id="solNotifIcon" class="fa-solid fa-bell text-white"></i>
+                        </div>
+                        <div class="flex-1 text-left">
+                            <div class="flex justify-between items-center mb-0.5">
+                                <span class="notif-title text-xs font-bold text-gray-800">SOL Notification</span>
+                                <span class="text-[9px] text-gray-400">now</span>
+                            </div>
+                            <p class="notif-msg text-[11px] text-gray-600 leading-snug"></p>
+                        </div>
+                    </div>
+
+                    <!-- App Header / Top Section -->
+                    <div class="bg-[#0046cd] text-white pt-10 pb-3 px-4 shadow-sm relative z-10 w-full shrink-0">
+                        <!-- Top Nav -->
+                        <div class="flex justify-between items-center mb-5">
+                            <div class="flex space-x-3 items-center text-white">
+                                <div class="relative">
+                                    <i class="fa-solid fa-bell text-xl"></i>
+                                    <div
+                                        class="absolute -top-1 -right-2 bg-red-500 text-[8px] font-bold px-1 rounded-full border border-[#0046cd]">
+                                        9+</div>
+                                </div>
+                                <i class="fa-solid fa-magnifying-glass text-xl leading-none"
+                                    style="transform: translateY(1px)"></i>
+                            </div>
+                            <div class="font-bold tracking-tight flex flex-col items-center leading-none">
+                                <span class="text-[8px] opacity-90 mb-[1px]">Shinhan</span>
+                                <div class="flex items-baseline">
+                                    <span class="font-extrabold text-xl mr-1 italic">SOL</span>
+                                    <span class="text-[9px] font-bold">Vietnam</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-3 items-center">
+                                <i class="fa-solid fa-phone text-lg" style="transform: scaleX(-1);"></i>
+                                <img src="https://flagcdn.com/w20/gb.png"
+                                    class="w-5 h-5 rounded-full object-cover border border-white" alt="EN">
+                            </div>
+                        </div>
+
+                        <!-- Greeting -->
+                        <div class="mb-3 text-[13px] tracking-wide">Hello, <span class="font-semibold uppercase">Alex
+                                Nguyen</span></div>
+
+                        <!-- Account Card -->
+                        <div class="bg-[#0038a8] rounded-xl p-4 shadow-inner relative mb-2">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-[11px] text-blue-100 mb-1">Account number</p>
+                                    <p class="font-mono text-[15px]">098-908-8686 <i
+                                            class="fa-regular fa-copy ml-1 text-xs"></i></p>
+                                </div>
+                                <i class="fa-solid fa-qrcode text-xl text-white cursor-pointer opacity-90"
+                                    onclick="showQRScreen()"></i>
+                            </div>
+                            <div class="flex items-center">
+                                <p class="text-[11px] text-blue-100 w-28">Balance</p>
+                                <p class="font-bold text-lg tracking-wide">****** VND <i
+                                        class="fa-solid fa-eye text-xs ml-1 text-white opacity-80"></i></p>
+                            </div>
+                        </div>
+
+                        <!-- Account Actions -->
+                        <div class="flex justify-between items-center mt-3 mb-1 px-1 text-[11px] font-bold">
+                            <div class="flex items-center cursor-pointer"><i
+                                    class="fa-regular fa-file-lines mr-1.5 text-sm"></i> Choose default account</div>
+                            <div class="flex items-center cursor-pointer"><i
+                                    class="fa-solid fa-clock-rotate-left mr-1.5 text-sm"></i> Account details</div>
+                        </div>
+                    </div>
+
+                    <!-- Main App Content (Scrollable) -->
+                    <div class="flex-1 flex flex-col w-full bg-white overflow-y-auto hide-scrollbar z-0">
+                        <!-- Recent Section -->
+                        <div class="p-4 pt-5 pb-2">
+                            <div class="flex justify-between items-end mb-3">
+                                <h3 class="font-bold text-gray-800 text-[16px]">Recent</h3>
+                                <a href="#" class="text-blue-600 text-[13px] font-semibold">More</a>
+                            </div>
+                            <div class="flex space-x-3 overflow-x-auto hide-scrollbar pb-1">
+                                <div
+                                    class="bg-white p-3 rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.1)] flex-1 min-w-[150px] flex items-center space-x-3 cursor-pointer">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold shrink-0 text-sm">
+                                        M</div>
+                                    <div class="overflow-hidden">
+                                        <p class="text-[11px] font-bold text-gray-700 truncate mb-0.5">REVI COFFEE AN...
+                                        </p>
+                                        <p class="text-[10px] text-gray-500">Maritime Bank</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-white p-3 rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.1)] flex-1 min-w-[150px] flex items-center space-x-3 cursor-pointer">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold shrink-0 text-sm">
+                                        V</div>
+                                    <div class="overflow-hidden">
+                                        <p class="text-[11px] font-bold text-gray-700 truncate mb-0.5">PHAM THI THU C...
+                                        </p>
+                                        <p class="text-[10px] text-gray-500">VP Bank</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Banking Services -->
+                        <div class="p-4 pt-4">
+                            <div class="flex justify-between items-end mb-4">
+                                <h3 class="font-bold text-gray-800 text-[16px]">Banking Services</h3>
+                                <a href="#" class="text-blue-600 text-[13px] font-semibold">Arrange</a>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3 mb-6">
+                                <div
+                                    class="bg-white p-3 border border-gray-100 rounded-2xl shadow-[0_2px_10px_-3px_rgba(0,0,0,0.1)] relative h-[90px] flex flex-col cursor-pointer">
+                                    <p class="font-bold text-gray-800 text-[13px] mb-1">Transfer</p>
+                                    <p class="text-[10px] text-gray-500 leading-snug">Domestic<br>Overseas</p>
+                                    <i
+                                        class="fa-solid fa-right-left absolute bottom-3 right-3 text-teal-500 bg-teal-50 text-[11px] p-2 rounded-full"></i>
+                                </div>
+                                <div
+                                    class="bg-white p-3 border border-gray-100 rounded-2xl shadow-[0_2px_10px_-3px_rgba(0,0,0,0.1)] relative h-[90px] flex flex-col cursor-pointer">
+                                    <p class="font-bold text-gray-800 text-[13px] mb-1">Account</p>
+                                    <p class="text-[10px] text-gray-500 leading-snug">Transaction<br>History</p>
+                                    <i
+                                        class="fa-solid fa-building-columns absolute bottom-3 right-3 text-blue-600 bg-blue-50 text-[11px] p-1.5 rounded pr-2"></i>
+                                </div>
+                                <div
+                                    class="bg-white p-3 border border-gray-100 rounded-2xl shadow-[0_2px_10px_-3px_rgba(0,0,0,0.1)] relative h-[90px] flex flex-col cursor-pointer hover:bg-gray-50 transition">
+                                    <p class="font-bold text-gray-800 text-[13px] mb-1 truncate">New account</p>
+                                    <p class="text-[10px] text-gray-500 leading-snug">Demand<br>Deposit</p>
+                                    <div
+                                        class="absolute bottom-3 right-3 text-yellow-500 bg-yellow-50 text-[14px] p-1.5 rounded flex items-center justify-center">
+                                        <i class="fa-solid fa-file-invoice-dollar"></i><i
+                                            class="fa-solid fa-plus absolute -top-1 -right-1 text-[8px] bg-white rounded-full"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Referral Banner - Replacing standard grid for Demo -->
+                            <div class="bg-gradient-to-r from-[#0046cd] to-[#0052f0] rounded-2xl p-4 shadow-lg cursor-pointer hover:shadow-xl transition text-white border border-blue-400 relative overflow-hidden"
+                                onclick="showQRScreen()">
+                                <div class="absolute top-0 right-0 p-4 opacity-10">
+                                    <i class="fa-solid fa-bullhorn text-6xl"></i>
+                                </div>
+                                <div class="flex justify-between items-center mb-2 relative z-10">
+                                    <h4 class="font-bold text-[17px] tracking-tight">Refer & Earn! <i
+                                            class="fa-solid fa-gift text-yellow-300 ml-1"></i></h4>
+                                    <div
+                                        class="bg-white/20 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm">
+                                        New</div>
+                                </div>
+                                <p class="text-[12px] text-blue-100 mb-4 leading-relaxed relative z-10 w-11/12">Let
+                                    friends experience Shinhan products. You both get rewarded for Credit Cards, POS &
+                                    Loans.</p>
+                                <button
+                                    class="bg-yellow-400 hover:bg-yellow-300 text-blue-900 text-[13px] font-bold py-2.5 px-4 rounded-xl shadow-sm w-full transition flex items-center justify-center relative z-10"><i
+                                        class="fa-solid fa-qrcode mr-2"></i> Generate Digital Card</button>
+                            </div>
+                            <div class="h-10"></div> <!-- Padding for bottom nav -->
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div
+                        class="bg-white border-t border-gray-100 w-full z-20 flex justify-between items-center px-4 pt-2 pb-6 text-gray-500 shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] relative">
+                        <div class="text-center flex flex-col items-center cursor-pointer text-blue-700 w-12">
+                            <i class="fa-solid fa-house mb-1 text-[20px]"></i>
+                            <span class="text-[10px] font-bold">Home</span>
+                        </div>
+                        <div
+                            class="text-center flex flex-col items-center cursor-pointer hover:text-blue-700 w-12 transition">
+                            <i class="fa-solid fa-list mb-1 text-[20px]"></i>
+                            <span class="text-[10px] font-semibold">Information</span>
+                        </div>
+
+                        <div class="relative flex flex-col items-center cursor-pointer group w-16"
+                            onclick="showQRScreen()">
+                            <div
+                                class="w-[58px] h-[58px] bg-[#0046cd] text-white rounded-full flex items-center justify-center shadow-[0_8px_15px_-3px_rgba(0,70,205,0.4)] border-4 border-white absolute -top-9 group-hover:scale-105 transition duration-200">
+                                <i class="fa-solid fa-qrcode text-[26px]"></i>
+                                <div
+                                    class="absolute inset-0 rounded-full ring-1 ring-blue-300 ring-offset-2 opacity-50">
+                                </div>
+                            </div>
+                            <span class="text-[11px] font-bold text-gray-800 mt-6">QR</span>
+                        </div>
+
+                        <div
+                            class="text-center flex flex-col items-center cursor-pointer hover:text-blue-700 w-12 transition">
+                            <i class="fa-solid fa-comment-dots mb-1 text-[20px]"></i>
+                            <span class="text-[10px] font-semibold">Guide</span>
+                        </div>
+                        <div
+                            class="text-center flex flex-col items-center cursor-pointer hover:text-blue-700 w-12 transition">
+                            <i class="fa-solid fa-gear mb-1 text-[20px]"></i>
+                            <span class="text-[10px] font-semibold">Settings</span>
+                        </div>
+                    </div>
+
+                    <!-- Overlay QR Screen -->
+                    <div id="qrScreen" class="absolute inset-0 bg-white z-30 flex flex-col fade-in hidden w-full">
+                        <div
+                            class="pt-12 pb-4 px-4 flex items-center border-b border-gray-100 bg-white shadow-sm w-full">
+                            <button onclick="hideQRScreen()"
+                                class="text-gray-500 hover:text-gray-800 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50"><i
+                                    class="fa-solid fa-chevron-left text-xl"></i></button>
+                            <h3 class="mx-auto font-bold text-[17px] text-gray-800">My Digital Card</h3>
+                            <div class="w-10"></div> <!-- spacer -->
+                        </div>
+                        <div class="flex-1 p-6 flex flex-col items-center justify-center text-center w-full bg-gray-50">
+                            <div
+                                class="bg-white p-8 rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 w-full flex flex-col items-center">
+                                <h4 class="text-2xl font-extrabold text-[#0046cd] mb-1">Alex Nguyen</h4>
+                                <p class="text-gray-500 text-[13px] mb-8">Scan to explore Shinhan services</p>
+
+                                <div class="bg-white p-5 rounded-3xl shadow-md border border-gray-200 mb-8 w-52 h-52 flex items-center justify-center relative cursor-pointer group hover:border-[#0046cd] transition duration-300"
+                                    onclick="simulateScan()">
+                                    <i
+                                        class="fa-solid fa-qrcode text-[120px] text-gray-800 opacity-90 group-hover:scale-95 transition"></i>
+                                    <div
+                                        class="absolute inset-0 bg-[#0046cd]/10 flex items-center justify-center rounded-3xl opacity-0 group-hover:opacity-100 transition backdrop-blur-[1px]">
+                                        <span
+                                            class="bg-[#0046cd] text-white text-[11px] px-4 py-2 rounded-full font-bold shadow-lg flex items-center"><i
+                                                class="fa-solid fa-camera mr-2"></i> Click to Sim Scan</span>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="bg-gray-100 rounded-lg px-4 py-2 flex items-center space-x-2 text-gray-500 mb-2 w-full justify-center">
+                                    <i class="fa-solid fa-lock text-[10px]"></i>
+                                    <p class="text-[10px] font-mono break-all truncate">CIF: SHA256-***-8F9A</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 w-full flex space-x-3">
+                                <button
+                                    class="flex-1 bg-white text-gray-700 py-3.5 rounded-xl font-bold shadow-sm border border-gray-200 hover:bg-gray-50 transition flex items-center justify-center text-[13px]">
+                                    <i class="fa-solid fa-download mr-2 text-[#0046cd]"></i> Save
+                                </button>
+                                <button onclick="simulateScan()"
+                                    class="flex-1 bg-[#0046cd] text-white py-3.5 rounded-xl font-bold shadow-md hover:bg-blue-700 transition flex items-center justify-center text-[13px]">
+                                    <i class="fa-solid fa-share-nodes mr-2"></i> Share Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARROW -->
+            <div class="hidden xl:flex items-center justify-center text-blue-300 mt-80">
+                <i class="fa-solid fa-arrow-right-long text-4xl"></i>
+            </div>
+
+            <!-- PANEL 2: LANDING PAGE -->
+            <div class="flex flex-col items-center w-full xl:w-1/4 min-w-[320px]">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700"><i class="fa-brands fa-safari mr-2"></i>2.
+                    Landing
+                    Page (Prospect)</h2>
+
+                <div class="device-frame w-full h-[650px] flex flex-col hide-scrollbar overflow-y-auto bg-gray-50 relative pointer-events-none opacity-50 transition duration-300"
+                    id="lpContainer">
+                    <div class="notch"></div>
+
+                    <!-- iOS Notification (Prospect App) -->
+                    <div id="lpNotif" class="ios-notif">
+                        <div
+                            class="w-9 h-9 rounded-lg shadow-sm border border-blue-200 flex items-center justify-center bg-blue-500 shrink-0">
+                            <i id="lpNotifIcon" class="fa-solid fa-comment-dots text-white"></i>
+                        </div>
+                        <div class="flex-1 text-left">
+                            <div class="flex justify-between items-center mb-0.5">
+                                <span class="notif-title text-xs font-bold text-gray-800">Messages</span>
+                                <span class="text-[9px] text-gray-400">now</span>
+                            </div>
+                            <p class="notif-msg text-[11px] text-gray-600 leading-snug"></p>
+                        </div>
+                    </div>
+
+                    <!-- Cover -->
+                    <div class="h-40 bg-blue-600 relative flex items-end justify-center pb-8 pt-12 text-white w-full">
+                        <i class="fa-solid fa-building-columns text-4xl opacity-20 absolute top-12 left-6"></i>
+                        <h2 class="text-2xl font-bold z-10 text-center">Welcome to <br>Shinhan Bank</h2>
+                    </div>
+
+                    <div class="bg-white -mt-4 rounded-t-2xl flex-1 p-6 relative z-10 shadow-sm w-full">
+                        <div class="text-center mb-6">
+                            <p class="text-sm text-gray-500 mb-1">Referred personally by</p>
+                            <div
+                                class="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold border border-blue-100">
+                                <i class="fa-solid fa-user-check mr-2"></i> Alex Nguyen
+                            </div>
+                        </div>
+
+                        <form id="lpForm" onsubmit="submitLead(event)" class="space-y-4 w-full">
+                            <div class="w-full">
+                                <label
+                                    class="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Interested
+                                    Service</label>
+                                <select id="serviceType"
+                                    class="w-full border-gray-300 border rounded-lg px-4 py-3 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="POS Machine">POS Machine Registration</option>
+                                    <option value="Credit Card">Open Credit Card</option>
+                                    <option value="SOHO Loan">SOHO Business Loan</option>
+                                </select>
+                            </div>
+                            <div class="w-full">
+                                <input type="text" id="custName" disabled placeholder="Full Name" value=""
+                                    class="w-full border-gray-300 border rounded-lg px-4 py-3 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="w-full">
+                                <input type="tel" id="custPhone" disabled placeholder="Phone Number" value=""
+                                    class="w-full border-gray-300 border rounded-lg px-4 py-3 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 w-full">
+                                <input type="text" id="custCity" disabled placeholder="City" value=""
+                                    class="w-full border-gray-300 border rounded-lg px-4 py-3 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <input type="text" id="custDistrict" disabled placeholder="District" value=""
+                                    class="w-full border-gray-300 border rounded-lg px-4 py-3 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+
+                            <!-- Smart Captcha Simulator -->
+                            <div id="captchaArea" class="hidden justify-center my-4 fade-in w-full">
+                                <div
+                                    class="border border-gray-200 bg-gray-50 p-3 rounded-lg flex items-center space-x-3 w-full justify-between shadow-inner">
+                                    <div class="flex items-center space-x-2">
+                                        <input type="checkbox" id="captchaBox"
+                                            class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
+                                        <label for="captchaBox"
+                                            class="text-sm text-gray-600 font-medium cursor-pointer">I'm not a
+                                            bot</label>
+                                    </div>
+                                    <i class="fa-solid fa-shield-halved text-blue-200 text-xl"></i>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="submitBtn" disabled
+                                class="w-full bg-blue-600 text-white py-3.5 rounded-xl font-bold shadow-md hover:bg-blue-700 transition mt-6 flex justify-center items-center">
+                                Submit Registration
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Success Overlay -->
+                    <div id="successOverlay"
+                        class="absolute inset-0 bg-white z-30 flex flex-col items-center justify-center p-6 text-center hidden fade-in w-full">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-check text-4xl text-green-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
+                        <p class="text-gray-500 text-sm mb-6">Your request has been securely sent. Our telesale team
+                            will contact you shortly.</p>
+                        <p
+                            class="text-[11px] text-gray-400 bg-gray-50 p-3 rounded-lg border font-mono break-words w-full">
+                            Lead pushed to VCRM & ZNS notified.</p>
+                        <button onclick="resetDemoLocally()"
+                            class="mt-8 mx-auto w-32 bg-gray-100 text-gray-600 py-2 rounded-lg font-semibold hover:bg-gray-200 shadow-sm transition">Reset
+                            Demo</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ARROW -->
+            <div class="hidden xl:flex items-center justify-center text-blue-300 mt-80">
+                <i class="fa-solid fa-arrow-right-long text-4xl"></i>
+            </div>
+
+            <!-- PANEL 3: VCRM -->
+            <div class="flex flex-col items-center w-full xl:w-2/5 min-w-[600px]">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700"><i class="fa-solid fa-desktop mr-2"></i>3. VCRM
+                    System (HO & RM)</h2>
+
+                <div
+                    class="border-4 border-gray-800 rounded-xl overflow-hidden shadow-2xl bg-white w-full h-[650px] flex flex-col">
+                    <!-- Browser Chrome -->
+                    <div class="bg-gray-100 px-4 py-3 border-b border-gray-200 flex items-center space-x-2 w-full">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                        <div
+                            class="bg-white px-3 py-1 rounded text-xs text-center border text-gray-500 flex-1 ml-4 font-mono truncate">
+                            vcrm.shinhan.com.vn/leads/dashboard</div>
+                    </div>
+
+                    <!-- VCRM Header -->
+                    <div class="bg-blue-900 text-white p-4 flex justify-between items-center shadow w-full shrink-0">
+                        <div class="font-bold flex items-center text-lg"><i class="fa-solid fa-chart-line mr-2"></i>
+                            VCRM Workspace</div>
+                        <div class="text-sm">Logged in as: Telesale / RM Admin</div>
+                    </div>
+
+                    <!-- Kanban Board -->
+                    <div class="flex-1 bg-gray-50 p-4 overflow-x-auto overflow-y-hidden w-full h-full relative">
+                        <div class="flex space-x-4 h-full min-w-max pb-2 absolute inset-4">
+
+                            <!-- Column: New Lead -->
+                            <div
+                                class="w-72 bg-gray-100 rounded-lg shrink-0 flex flex-col border border-gray-200 h-full">
+                                <div
+                                    class="p-3 border-b border-gray-200 font-bold text-gray-700 flex justify-between items-center bg-white rounded-t-lg shrink-0">
+                                    New Lead (HO) <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"
+                                        id="newCount">0</span>
+                                </div>
+                                <div class="p-2 space-y-2 flex-1 overflow-y-auto" id="colNew">
+                                    <div class="text-center text-gray-400 text-sm mt-10" id="emptyNew">Waiting for
+                                        digital inflow...</div>
+                                </div>
+                            </div>
+
+                            <!-- Column: Processing -->
+                            <div
+                                class="w-72 bg-gray-100 rounded-lg shrink-0 flex flex-col border border-gray-200 h-full">
+                                <div
+                                    class="p-3 border-b border-gray-200 font-bold text-gray-700 flex justify-between items-center bg-white rounded-t-lg shrink-0">
+                                    Processing (RM) <span
+                                        class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">1</span>
+                                </div>
+                                <div class="p-2 space-y-2 flex-1 overflow-y-auto" id="colProcess">
+                                    <div
+                                        class="bg-white p-3 rounded shadow-sm border border-gray-200 cursor-pointer hover:border-yellow-400 transition">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <span class="font-bold text-gray-800">Tran Van B</span>
+                                            <span
+                                                class="text-[10px] bg-gray-100 px-1 py-0.5 rounded text-gray-500 font-medium">1d
+                                                ago</span>
+                                        </div>
+                                        <div class="text-xs text-gray-600 mb-2 space-y-1">
+                                            <p><i class="fa-solid fa-tag w-4 text-gray-400"></i> Credit Card</p>
+                                            <p><i class="fa-solid fa-location-dot w-4 text-gray-400"></i> District 1,
+                                                HCM</p>
+                                        </div>
+                                        <div
+                                            class="text-[10px] text-gray-400 border-t pt-2 mt-2 bg-blue-50 -mx-3 -mb-3 p-2 rounded-b flex justify-between items-center">
+                                            <span class="truncate pr-2">Ref: CIF ***928 | RM: D1_Tung</span>
+                                            <span onclick="closeDeal(this)"
+                                                class="text-green-600 font-bold hover:underline shrink-0 cursor-pointer">Close
+                                                Deal <i class="fa-solid fa-check"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Column: Closed Won -->
+                            <div
+                                class="w-72 bg-gray-100 rounded-lg shrink-0 flex flex-col border border-gray-200 h-full">
+                                <div
+                                    class="p-3 border-b border-gray-200 font-bold text-gray-700 flex justify-between items-center bg-white rounded-t-lg shrink-0">
+                                    Closed Won <span
+                                        class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">0</span>
+                                </div>
+                                <div class="p-2 space-y-2 flex-1 overflow-y-auto" id="colClosed">
+                                    <div class="text-center text-gray-400 text-xs mt-10 px-4">
+                                        <i class="fa-solid fa-wand-magic-sparkles text-2xl mb-2"></i>
+                                        <p>Closed leads will be sent to PBD / Rule Engine for Auto-Commission daily.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast"
+        class="fixed bottom-10 right-10 bg-green-600 text-white px-6 py-4 rounded-xl shadow-2xl transition-transform transform translate-y-32 flex items-center z-50">
+        <i class="fa-solid fa-circle-check text-2xl mr-3"></i>
+        <div>
+            <h4 class="font-bold text-sm">ZNS Notification Sent</h4>
+            <p class="text-xs opacity-90" id="toastMsg">Message to Referrer & Prospect delivered.</p>
+        </div>
+    </div>
+
+    <!-- Action Modal: Route Task -->
+    <div id="routeModal" class="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center hidden fade-in">
+        <div class="bg-white rounded-2xl p-6 w-96 shadow-2xl relative">
+            <button onclick="closeRouteModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800"><i
+                    class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="text-center mb-4">
+                <div
+                    class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-2xl relative">
+                    <i class="fa-solid fa-headset absolute"></i>
+                    <i class="fa-solid fa-arrow-right absolute -right-3 text-sm text-blue-400 animate-pulse"></i>
+                </div>
+                <h3 class="font-bold text-lg">Telesale Processing</h3>
+                <p class="text-xs text-gray-500">Contacting customer & routing to Branch</p>
+            </div>
+
+            <div class="space-y-3 mb-6">
+                <div class="bg-gray-50 p-3 rounded border text-sm">
+                    <p class="text-xs text-gray-500 mb-1">Target Branch</p>
+                    <div class="font-bold border-b border-white pb-2 mb-2"><i
+                            class="fa-solid fa-building text-gray-400 mr-2 w-4"></i> Selected Branch</div>
+                    <p class="text-xs text-gray-500 mb-1">Assign to RM</p>
+                    <div class="font-bold"><i class="fa-solid fa-user-tie text-gray-400 mr-2 w-4"></i> Auto-assigned
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="confirmRouteTask()"
+                class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition">Confirm
+                Routing to RM</button>
+        </div>
+    </div>
+
+    <!-- Action Modal: Close Deal -->
+    <div id="closeModal" class="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center hidden fade-in">
+        <div class="bg-white rounded-2xl p-6 w-96 shadow-2xl relative">
+            <button onclick="closeDealModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800"><i
+                    class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="text-center mb-4 mt-2">
+                <img src="https://www.svgrepo.com/show/400613/handshake.svg" class="w-20 h-20 mx-auto mb-4 opacity-80"
+                    alt="Handshake">
+                <h3 class="font-bold text-lg text-green-700">RM Action: Close Deal</h3>
+                <p class="text-xs text-gray-500">Marking this lead as successfully converted!</p>
+            </div>
+
+            <p class="text-sm text-center text-gray-600 mb-6 px-4">
+                The product has been issued. This lead will now be sent to PBD System for commission rules processing.
+            </p>
+
+            <button onclick="confirmCloseDeal()"
+                class="w-full bg-green-600 text-white font-bold py-2.5 rounded-lg hover:bg-green-700 transition text-sm">Mark
+                as Closed Won</button>
+        </div>
+    </div>
+
+    <script>
+        const names = ["Le Thi Hoa", "Nguyen Van Minh", "Pham Ngoc Anh", "Bui Tuan Dung", "Tran Quang Khai", "Vo Thi Yen"];
+        const phones = ["0903xxx123", "0988xxx456", "0934xxx789", "0912xxx345"];
+        const districts = ["District 7, HCM", "Cau Giay, HN", "Thu Duc, HCM", "District 3, HCM"];
+
+        function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        function showQRScreen() {
+            document.getElementById('qrScreen').classList.remove('hidden');
+        }
+
+        function hideQRScreen() {
+            document.getElementById('qrScreen').classList.add('hidden');
+        }
+
+        function simulateScan() {
+            const lp = document.getElementById('lpContainer');
+            lp.classList.remove('opacity-50', 'pointer-events-none');
+            lp.classList.add('shadow-2xl', 'ring-4', 'ring-blue-400');
+
+            const genName = rand(names);
+
+            setTimeout(() => {
+                document.getElementById('custName').value = genName;
+                document.getElementById('custPhone').value = rand(phones);
+                document.getElementById('custCity').value = "Ho Chi Minh";
+                document.getElementById('custDistrict').value = rand(districts);
+
+                ['custName', 'custPhone', 'custCity', 'custDistrict'].forEach(id => {
+                    document.getElementById(id).removeAttribute('disabled');
+                });
+
+                document.getElementById('captchaArea').classList.remove('hidden');
+                document.getElementById('captchaArea').classList.add('flex');
+
+                document.getElementById('captchaBox').addEventListener('change', function () {
+                    if (this.checked) {
+                        document.getElementById('submitBtn').removeAttribute('disabled');
+                    } else {
+                        document.getElementById('submitBtn').setAttribute('disabled', 'true');
+                    }
+                });
+            }, 500);
+        }
+
+        function submitLead(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<div class="spinner mr-2"></div> Processing...';
+            btn.classList.add('bg-blue-800');
+            btn.setAttribute('disabled', 'true');
+
+            setTimeout(() => {
+                document.getElementById('successOverlay').classList.remove('hidden');
+
+                const name = document.getElementById('custName').value;
+                const srv = document.getElementById('serviceType').value;
+                const loc = document.getElementById('custDistrict').value;
+
+                addVCRMCard(name, srv, loc);
+                showToast();
+
+                showIOSNotif('sol', 'SOL Push Notification', `System recorded lead ${name}. Waiting for RM assigned.`, 'info');
+                showIOSNotif('lp', 'OTT Message - Shinhan', `We received your request for ${srv}. Our telesale will call you soon!`, 'info');
+
+            }, 1500);
+        }
+
+        function addVCRMCard(name, service, location) {
+            const emptyEl = document.getElementById('emptyNew');
+            if (emptyEl) emptyEl.classList.add('hidden');
+
+            const cardHtml = `
+                <div class="bg-white p-3 rounded shadow border border-blue-400 border-l-4 fade-in cursor-pointer hover:shadow-md transition">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="font-bold text-gray-800 truncate pr-2">${name}</span>
+                        <span class="text-[9px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-bold animate-pulse shrink-0">NEW</span>
+                    </div>
+                    <div class="text-xs text-gray-600 mb-2 space-y-1">
+                        <p class="truncate"><i class="fa-solid fa-tag w-4 text-gray-400"></i> ${service}</p>
+                        <p class="truncate"><i class="fa-solid fa-location-dot w-4 text-gray-400"></i> ${location}</p>
+                    </div>
+                    <div class="text-[10px] text-gray-400 border-t pt-2 mt-2 bg-blue-50 -mx-3 -mb-3 p-2 rounded-b flex justify-between items-center">
+                        <span class="truncate pr-2">Ref: Alex Nguyen (Encrypted)</span>
+                        <span class="text-blue-600 font-bold hover:underline shrink-0 cursor-pointer" onclick="routeTask(this)">Route Task <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('colNew').insertAdjacentHTML('afterbegin', cardHtml);
+            document.getElementById('newCount').innerText = parseInt(document.getElementById('newCount').innerText) + 1;
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-32');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32');
+            }, 5000);
+        }
+
+        let currentCardToRoute = null;
+        function routeTask(el) {
+            currentCardToRoute = el.closest('.border-blue-400');
+            document.getElementById('routeModal').classList.remove('hidden');
+        }
+
+        function closeRouteModal() {
+            document.getElementById('routeModal').classList.add('hidden');
+        }
+
+        function confirmRouteTask() {
+            document.getElementById('routeModal').classList.add('hidden');
+            if (!currentCardToRoute) return;
+
+            currentCardToRoute.classList.remove('border-blue-400');
+            currentCardToRoute.classList.add('border-yellow-400');
+
+            let statusBadge = currentCardToRoute.querySelector('.bg-red-100');
+            statusBadge.className = 'text-[9px] bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded font-bold shrink-0';
+            statusBadge.innerText = 'PROCESSING';
+
+            let actionArea = currentCardToRoute.querySelector('.border-t');
+            actionArea.innerHTML = `
+                <span class="truncate pr-2 text-gray-600 font-semibold">RM Assigned</span>
+                <span onclick="closeDeal(this)" class="text-green-600 font-bold hover:underline shrink-0 cursor-pointer">Close Deal <i class="fa-solid fa-check"></i></span>
+            `;
+
+            document.getElementById('colProcess').insertAdjacentElement('afterbegin', currentCardToRoute);
+
+            document.getElementById('newCount').innerText = parseInt(document.getElementById('newCount').innerText) - 1;
+            let procBadge = document.querySelector('#colProcess').previousElementSibling.querySelector('.bg-yellow-100');
+            procBadge.innerText = parseInt(procBadge.innerText) + 1;
+        }
+
+        let currentCardToClose = null;
+        function closeDeal(el) {
+            currentCardToClose = el.closest('.bg-white');
+            document.getElementById('closeModal').classList.remove('hidden');
+        }
+
+        function closeDealModal() {
+            document.getElementById('closeModal').classList.add('hidden');
+        }
+
+        function confirmCloseDeal() {
+            document.getElementById('closeModal').classList.add('hidden');
+            if (!currentCardToClose) return;
+
+            currentCardToClose.classList.remove('border-yellow-400', 'border-blue-400');
+            currentCardToClose.classList.add('border-green-400', 'opacity-80');
+
+            let statusBadge = currentCardToClose.querySelector('.bg-yellow-100') || currentCardToClose.querySelector('.bg-red-100');
+            if (statusBadge) {
+                statusBadge.className = 'text-[9px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold shrink-0';
+                statusBadge.innerText = 'WON';
+            }
+
+            let actionArea = currentCardToClose.querySelector('.border-t');
+            actionArea.innerHTML = `
+                <span class="truncate pr-2 w-full text-center text-green-700"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Ready for PBD Sync</span>
+            `;
+
+            if (document.getElementById('colClosed').querySelector('.text-gray-400.text-xs.mt-10')) {
+                document.getElementById('colClosed').querySelector('.text-gray-400.text-xs.mt-10').classList.add('hidden');
+            }
+
+            document.getElementById('colClosed').insertAdjacentElement('afterbegin', currentCardToClose);
+
+            let procBadge = document.querySelector('#colProcess').previousElementSibling.querySelector('.bg-yellow-100');
+            procBadge.innerText = Math.max(0, parseInt(procBadge.innerText) - 1);
+
+            let closedBadge = document.querySelector('#colClosed').previousElementSibling.querySelector('.bg-green-100');
+            closedBadge.innerText = parseInt(closedBadge.innerText) + 1;
+
+            setTimeout(() => {
+                showIOSNotif('sol', 'Commission Earned 💸', `Your lead has been successfully dealt. +500,000 VND credited to your account.`, 'commission');
+                showIOSNotif('lp', 'OTT Message - Update', `Notice: Your requested service has been successfully processed!`, 'info');
+            }, 800);
+        }
+
+        function showIOSNotif(target, title, message, iconType) {
+            const notifId = target === 'sol' ? 'solNotif' : 'lpNotif';
+            const notifEl = document.getElementById(notifId);
+
+            notifEl.querySelector('.notif-title').innerText = title;
+            notifEl.querySelector('.notif-msg').innerText = message;
+
+            if (target === 'sol') {
+                const iconEl = document.getElementById('solNotifIcon');
+                const containerEl = iconEl.parentElement;
+                if (iconType === 'commission') {
+                    iconEl.className = "fa-solid fa-sack-dollar text-white";
+                    containerEl.className = "w-9 h-9 rounded-lg shadow-sm border border-yellow-500 flex items-center justify-center bg-yellow-500 shrink-0";
+                } else {
+                    iconEl.className = "fa-solid fa-bell text-white";
+                    containerEl.className = "w-9 h-9 rounded-lg shadow-sm border flex items-center justify-center shrink-0 bg-blue-600";
+                }
+            }
+
+            notifEl.classList.add('show');
+            setTimeout(() => {
+                notifEl.classList.remove('show');
+            }, 4500);
+        }
+
+        function resetDemoLocally() {
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>
