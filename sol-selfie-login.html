@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOL Shinhan — Face Login Interactive Mockup</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans',sans-serif;background:#f0f0ec;min-height:100vh;display:flex;flex-direction:column}
+
+/* Top bar */
+.topbar{background:#fff;border-bottom:1px solid #e8e8e4;padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar h1{font-size:16px;font-weight:700;color:#1a1a1a}
+.topbar p{font-size:12px;color:#999}
+.breadcrumb{display:flex;gap:6px;align-items:center;margin-left:auto;font-size:12px;color:#aaa}
+.breadcrumb .bc-item{padding:4px 10px;border-radius:6px;cursor:pointer;transition:all .2s;font-weight:500}
+.breadcrumb .bc-item.active{background:#3478F6;color:#fff}
+.breadcrumb .bc-item:not(.active):hover{background:#e8e8e4}
+.bc-arrow{font-size:10px;color:#ccc}
+
+/* Main layout */
+.main{flex:1;display:flex;padding:24px 32px;gap:40px;justify-content:center;align-items:flex-start}
+@media(max-width:900px){.main{flex-direction:column;align-items:center;padding:16px}}
+
+/* Phone shell */
+.phone-wrap{position:relative;flex-shrink:0}
+.phone{width:375px;height:812px;background:#fff;border-radius:42px;border:2.5px solid #111;position:relative;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.12)}
+.phone-notch{width:126px;height:32px;background:#111;border-radius:0 0 18px 18px;position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:90}
+.phone-bar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;background:#111;border-radius:3px;z-index:90}
+
+/* Screen container — holds all screens */
+.screen-container{position:absolute;inset:0;overflow:hidden}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s;overflow-y:auto;overflow-x:hidden}
+.screen.hide-left{transform:translateX(-100%);opacity:0;pointer-events:none}
+.screen.hide-right{transform:translateX(100%);opacity:0;pointer-events:none}
+.screen.active{transform:translateX(0);opacity:1}
+.screen::-webkit-scrollbar{display:none}
+
+/* Right panel - explanation */
+.explain-panel{width:340px;flex-shrink:0;position:relative}
+@media(max-width:900px){.explain-panel{width:100%;max-width:400px}}
+.explain-card{background:#fff;border-radius:14px;border:1px solid #e8e8e4;padding:20px 24px;transition:all .35s;opacity:1}
+.explain-card.fade{opacity:0;transform:translateY(8px)}
+.explain-tag{font-size:10px;font-weight:700;color:#3478F6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.explain-title{font-size:17px;font-weight:800;color:#1a1a1a;margin-bottom:12px;line-height:1.3}
+.explain-list{list-style:none;padding:0}
+.explain-list li{font-size:12.5px;color:#555;line-height:1.8;padding-left:16px;position:relative}
+.explain-list li::before{content:’’;position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#3478F6;opacity:.4}
+.explain-list li+li{margin-top:2px}
+.explain-nav{display:flex;gap:8px;margin-top:18px}
+.explain-nav button{padding:8px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;border:none}
+.btn-prev{background:#F2F2F7;color:#666}
+.btn-prev:hover{background:#e8e8e4}
+.btn-next{background:#3478F6;color:#fff}
+.btn-next:hover{background:#2960D0}
+.btn-next:disabled,.btn-prev:disabled{opacity:.3;cursor:default}
+.step-dots{display:flex;gap:6px;margin-top:14px;justify-content:center}
+.step-dot{width:8px;height:8px;border-radius:50%;background:#D1D1D6;transition:all .3s}
+.step-dot.active{background:#3478F6;width:20px;border-radius:4px}
+
+/* ========== SOL STYLES ========== */
+.sol-header{background:linear-gradient(180deg,#3478F6 0%,#2B6CE6 100%);padding:46px 20px 0;color:#fff;position:relative}
+.sol-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sol-topbar svg{width:22px;height:22px;fill:#fff}
+.sol-logo{text-align:center}
+.sol-logo-sm{font-size:10px;font-weight:600;opacity:.8;letter-spacing:.3px}
+.sol-logo-big{font-size:20px;font-weight:800;letter-spacing:-.5px}
+.sol-logo-big b{color:#FFD43B;font-weight:800}
+.sol-logo-vn{font-size:13px;font-weight:500;opacity:.9;margin-left:1px}
+.sol-topbar-r{display:flex;align-items:center;gap:6px}
+.sol-flag{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:12px;background:rgba(255,255,255,.1)}
+.sol-welcome h2{font-size:22px;font-weight:800;margin-top:2px}
+.sol-welcome p{font-size:13px;color:rgba(255,255,255,.75);margin-top:2px}
+.sol-curve{height:28px;background:linear-gradient(180deg,#2B6CE6,#2B6CE6);position:relative}
+.sol-curve::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:28px;background:#fff;border-radius:22px 22px 0 0}
+
+.sol-avatar-area{display:flex;justify-content:center;margin-top:-44px;position:relative;z-index:10}
+.sol-avatar{width:76px;height:76px;border-radius:50%;background:linear-gradient(145deg,#E8DCF0,#D4C4E0);border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.sol-user-name{text-align:center;margin-top:6px;font-size:15px;font-weight:700;color:#1C1C1E}
+
+/* Tabs */
+.sol-tabs{display:flex;margin:14px 20px 0;background:#F2F2F7;border-radius:10px;padding:3px}
+.sol-tab{flex:1;text-align:center;padding:8px 2px;font-size:12.5px;font-weight:600;color:#8E8E93;border-radius:8px;cursor:pointer;transition:all .2s}
+.sol-tab.active{background:#fff;color:#3478F6;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.sol-tab-c{display:inline-block;min-width:16px;height:16px;line-height:16px;font-size:9px;font-weight:700;border-radius:8px;background:#D1D1D6;color:#8E8E93;margin-left:3px;text-align:center;transition:all .2s}
+.sol-tab.active .sol-tab-c{background:#3478F6;color:#fff}
+
+/* Account cards */
+.sol-accts{padding:8px 20px;flex:1;overflow-y:auto}
+.sol-accts::-webkit-scrollbar{display:none}
+.sol-hint{font-size:11px;color:#AEAEB2;margin-bottom:8px}
+.sol-card{background:#fff;border:1.5px solid #F2F2F7;border-radius:14px;padding:13px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;position:relative}
+.sol-card:hover{border-color:#3478F6;box-shadow:0 2px 12px rgba(52,120,246,.1)}
+.sol-card:active{transform:scale(.97)}
+.sol-card.selected{border-color:#3478F6;background:#F0F6FF}
+.sol-card-row{display:flex;align-items:center;gap:11px}
+.sol-card-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.av-p{background:#DBEAFE;color:#1D4ED8}
+.av-s{background:#D1FAE5;color:#065F46}
+.av-c{background:#EDE9FE;color:#5B21B6}
+.av-c2{background:#FDE8E8;color:#991B1B}
+.sol-card-info{flex:1;min-width:0}
+.sol-card-name{font-size:14px;font-weight:700;color:#1C1C1E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sol-card-user{font-size:11px;color:#AEAEB2;font-family:‘Courier New’,monospace;margin-top:1px}
+.sol-card-meta{display:flex;align-items:center;gap:5px;margin-top:7px;flex-wrap:wrap}
+.badge{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:5px;display:inline-flex;align-items:center;gap:3px}
+.badge svg{width:11px;height:11px}
+.b-face{background:#D1FAE5;color:#065F46}
+.b-bio{background:#DBEAFE;color:#1D4ED8}
+.b-pw{background:#F2F2F7;color:#8E8E93}
+.b-role{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:5px}
+.b-admin{background:#EDE9FE;color:#5B21B6}
+.b-entry{background:#FEF3C7;color:#92400E}
+.b-soho{background:#D1FAE5;color:#065F46}
+
+.corp-grp{margin-bottom:10px}
+.corp-grp-h{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.corp-grp-n{font-size:11px;font-weight:700;color:#6B7280}
+.corp-grp-l{flex:1;height:1px;background:#F2F2F7}
+
+/* Password + Login */
+.sol-pw{background:#F2F2F7;border-radius:12px;padding:15px 16px;margin:6px 20px 10px;font-size:14px;color:#C7C7CC}
+.sol-actions{padding:0 20px 8px;display:flex;gap:10px;align-items:center}
+.sol-btn-login{flex:1;background:#3478F6;color:#fff;border:none;border-radius:14px;padding:15px;font-size:15px;font-weight:700;letter-spacing:.3px;cursor:pointer}
+.sol-btn-login:active{background:#2960D0}
+.sol-btn-face{width:52px;height:52px;background:#3478F6;border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.sol-btn-face svg{width:26px;height:26px;color:#fff}
+.sol-links{display:flex;justify-content:center;gap:20px;padding:2px 0 6px;font-size:12.5px}
+.sol-links a{color:#3478F6;text-decoration:none;font-weight:500}
+.sol-links span{color:#D1D1D6}
+
+/* Bottom shortcuts */
+.sol-shortcuts{display:flex;justify-content:space-around;padding:10px 16px;border-top:1px solid #F2F2F7;margin-top:auto}
+.sol-sc{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:9.5px;color:#3478F6;font-weight:600;text-align:center;max-width:85px;cursor:pointer}
+.sol-sc-icon{width:34px;height:34px;border-radius:9px;background:#EBF2FF;display:flex;align-items:center;justify-content:center}
+.sol-sc-icon svg{width:18px;height:18px;color:#3478F6}
+
+/* ========== FACE SCAN ========== */
+.scan-bg{background:linear-gradient(180deg,#001832 0%,#002B5C 100%);color:#fff;justify-content:flex-start}
+.scan-top{padding:46px 20px 6px;display:flex;align-items:center}
+.scan-cancel{font-size:13px;color:rgba(255,255,255,.6);cursor:pointer;display:flex;align-items:center;gap:2px}
+.scan-cancel svg{width:18px;height:18px;opacity:.6}
+.scan-logo{flex:1;text-align:center;font-size:15px;font-weight:800;letter-spacing:-.3px}
+.scan-logo b{color:#FFD43B}
+.scan-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:10px 20px}
+.scan-type-label{font-size:12px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:.5px}
+.scan-ring{width:200px;height:200px;border-radius:50%;border:3px solid rgba(255,255,255,.1);position:relative;display:flex;align-items:center;justify-content:center}
+.scan-ring::before{content:’’;position:absolute;inset:-5px;border-radius:50%;border:2.5px solid transparent;border-top-color:#00AAFF;animation:spin 1.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scan-oval{width:130px;height:160px;border-radius:50%;background:rgba(255,255,255,.05);border:1.5px dashed rgba(255,255,255,.12)}
+.scan-txt{font-size:15px;font-weight:600}
+.scan-sub{font-size:12px;color:rgba(255,255,255,.45)}
+.scan-pills{display:flex;gap:7px}
+.sp{padding:4px 12px;border-radius:16px;font-size:11px;font-weight:600}
+.sp-d{background:rgba(52,199,89,.15);color:#34C759}
+.sp-a{background:rgba(0,170,255,.2);color:#00AAFF}
+.sp-p{background:rgba(255,255,255,.07);color:rgba(255,255,255,.35)}
+.scan-bottom{padding:16px 20px 32px;text-align:center}
+.scan-acc-n{font-size:14px;font-weight:700}
+.scan-acc-t{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.scan-ttl{font-size:10px;color:rgba(255,255,255,.25);margin-top:8px}
+
+/* ========== HOME ========== */
+.home-bg{background:#f8f8f6}
+.home-hdr{background:linear-gradient(180deg,#3478F6 0%,#2B6CE6 100%);padding:46px 20px 18px;color:#fff}
+.home-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.home-topbar svg{width:20px;height:20px;fill:#fff;opacity:.9}
+.home-icons{display:flex;align-items:center;gap:10px}
+.home-noti{position:relative}
+.home-noti-b{position:absolute;top:-4px;right:-5px;width:15px;height:15px;border-radius:50%;background:#FF3B30;font-size:8px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center}
+.home-hello{font-size:12px;color:rgba(255,255,255,.75)}
+.home-name{font-size:17px;font-weight:700;margin-top:2px}
+.home-type-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.home-tbadge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer}
+.htb-p{background:rgba(255,255,255,.18);color:#fff}
+.htb-s{background:rgba(52,199,89,.25);color:#A7F3D0}
+.htb-c{background:rgba(167,139,250,.3);color:#E0D5FF}
+.home-switch{font-size:11px;color:rgba(255,255,255,.55);text-decoration:underline;cursor:pointer}
+
+.home-acct-card{background:#1B3A6B;margin:0 20px;border-radius:13px;padding:14px 16px;color:#fff}
+.home-acct-r{display:flex;justify-content:space-between;align-items:center}
+.home-acct-l{font-size:11px;color:rgba(255,255,255,.55)}
+.home-acct-v{font-size:14px;font-weight:600;margin-top:2px}
+.home-acct-links{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;margin-top:10px}
+.home-acct-lk{font-size:11px;color:#7AB8FF;font-weight:600;cursor:pointer}
+
+.corp-banner{margin:10px 20px 0;background:#EDE9FE;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:9px}
+.corp-bn-icon{width:34px;height:34px;border-radius:9px;background:#7C3AED;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.corp-bn-info{flex:1}
+.corp-bn-name{font-size:12px;font-weight:700;color:#5B21B6}
+.corp-bn-role{font-size:10px;color:#8B5CF6}
+.corp-bn-sw{font-size:10px;color:#7C3AED;font-weight:700;padding:4px 9px;border-radius:5px;background:rgba(124,58,237,.1);cursor:pointer;flex-shrink:0}
+
+.home-section{padding:14px 20px 0}
+.home-sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.home-sec-t{font-size:15px;font-weight:800;color:#1C1C1E}
+.home-sec-m{font-size:12px;color:#3478F6;font-weight:600;cursor:pointer}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.svc{background:#F9FAFB;border-radius:11px;padding:12px 10px;min-height:88px;display:flex;flex-direction:column;justify-content:space-between}
+.svc-t{font-size:12px;font-weight:700;color:#1C1C1E}
+.svc-d{font-size:10px;color:#AEAEB2;margin-top:2px;line-height:1.3}
+
+.sol-nav{display:flex;justify-content:space-around;align-items:flex-end;padding:7px 12px 5px;background:#fff;border-top:1px solid #F2F2F7;margin-top:auto}
+.sol-nav-i{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9.5px;font-weight:500;color:#AEAEB2;cursor:pointer}
+.sol-nav-i.active{color:#3478F6}
+.sol-nav-i svg{width:20px;height:20px}
+.sol-nav-qr{width:44px;height:44px;border-radius:13px;background:#3478F6;display:flex;align-items:center;justify-content:center;margin-top:-16px;box-shadow:0 4px 12px rgba(52,120,246,.3)}
+.sol-nav-qr svg{width:22px;height:22px;color:#fff}
+
+/* ========== SWITCH MODAL ========== */
+.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:80;display:flex;align-items:flex-end;transition:opacity .25s;opacity:0;pointer-events:none}
+.modal-overlay.show{opacity:1;pointer-events:auto}
+.modal-sheet{width:100%;background:#fff;border-radius:20px 20px 0 0;padding:20px 20px 40px;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.modal-overlay.show .modal-sheet{transform:translateY(0)}
+.modal-handle{width:40px;height:4px;background:#D1D1D6;border-radius:2px;margin:0 auto 16px}
+.modal-title{font-size:16px;font-weight:700;color:#1C1C1E;margin-bottom:4px}
+.modal-sub{font-size:12px;color:#AEAEB2;margin-bottom:14px}
+</style>
+
+</head>
+<body>
+
+<div class="topbar">
+<div>
+<h1>SOL Face Login — Interactive Mockup</h1>
+<p>Click through the flow: Account select → Face scan → Home</p>
+</div>
+<div class="breadcrumb" id="breadcrumb">
+<span class="bc-item active" onclick="goScreen(0)">Login</span>
+<span class="bc-arrow">›</span>
+<span class="bc-item" onclick="goScreen(1)">Face scan</span>
+<span class="bc-arrow">›</span>
+<span class="bc-item" onclick="goScreen(2)">Home</span>
+</div>
+</div>
+
+<div class="main">
+
+<!-- ===== PHONE ===== -->
+
+<div class="phone-wrap">
+<div class="phone">
+<div class="phone-notch"></div>
+<div class="screen-container">
+
+<!-- ===== SCREEN 0: LOGIN ===== -->
+
+<div class="screen active" id="s0">
+<div class="sol-header">
+<div class="sol-topbar">
+<svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h2"/></svg>
+<div class="sol-logo"><div class="sol-logo-sm">Shinhan</div><span class="sol-logo-big">S<b>o</b>L</span><span class="sol-logo-vn"> Vietnam</span></div>
+<div class="sol-topbar-r"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><div class="sol-flag">🇬🇧</div></div>
+</div>
+<div class="sol-welcome"><h2>Welcome back!</h2><p>Have a nice day :)</p></div>
+<div style="height:36px"></div>
+</div>
+<div class="sol-curve"></div>
+
+<div class="sol-avatar-area"><div class="sol-avatar">🐧</div></div>
+<div class="sol-user-name">LE XUAN DUONG</div>
+
+<div class="sol-tabs" id="login-tabs">
+<div class="sol-tab active" data-t="personal" onclick="switchLoginTab('personal')">Personal<span class="sol-tab-c">1</span></div>
+<div class="sol-tab" data-t="soho" onclick="switchLoginTab('soho')">SOHO<span class="sol-tab-c">1</span></div>
+<div class="sol-tab" data-t="corp" onclick="switchLoginTab('corp')">Corp<span class="sol-tab-c">3</span></div>
+</div>
+
+<!-- Personal -->
+
+<div class="sol-accts tab-pane" id="lp-personal">
+<div class="sol-hint">Personal account — device biometric (FaceID / Fingerprint)</div>
+<div class="sol-card" onclick="selectAccount('Personal','lxduong','Personal account','p')">
+<div class="sol-card-row">
+<div class="sol-card-av av-p">LD</div>
+<div class="sol-card-info"><div class="sol-card-name">Le Xuan Duong</div><div class="sol-card-user">lxduong</div></div>
+</div>
+<div class="sol-card-meta">
+<span class="badge b-bio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M2 12h2M20 12h2M12 2v2M12 20v2"/></svg>Biometric</span>
+<span class="badge b-pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Password</span>
+</div>
+</div>
+</div>
+
+<!-- SOHO -->
+
+<div class="sol-accts tab-pane" id="lp-soho" style="display:none">
+<div class="sol-hint">SOHO account — server-side face login</div>
+<div class="sol-card" onclick="selectAccount('SOHO','lxd_soho01','Cua hang Thanh Dat','s')">
+<div class="sol-card-row">
+<div class="sol-card-av av-s">TD</div>
+<div class="sol-card-info"><div class="sol-card-name">Cua hang Thanh Dat</div><div class="sol-card-user">lxd_soho01</div></div>
+</div>
+<div class="sol-card-meta">
+<span class="badge b-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0114 0"/></svg>Face login</span>
+<span class="badge b-pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Password</span>
+<span class="b-role b-soho">SOHO</span>
+</div>
+</div>
+</div>
+
+<!-- Corp -->
+
+<div class="sol-accts tab-pane" id="lp-corp" style="display:none">
+<div class="sol-hint">Corp accounts grouped by company</div>
+<div class="corp-grp">
+<div class="corp-grp-h"><span class="corp-grp-n">ABC Trading Co., Ltd</span><span class="corp-grp-l"></span></div>
+<div class="sol-card" onclick="selectAccount('Corp · Admin','lxd_abc_admin','ABC Trading Co., Ltd','c')">
+<div class="sol-card-row"><div class="sol-card-av av-c">AB</div><div class="sol-card-info"><div class="sol-card-name">Le Xuan Duong</div><div class="sol-card-user">lxd_abc_admin</div></div></div>
+<div class="sol-card-meta"><span class="badge b-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0114 0"/></svg>Face login</span><span class="b-role b-admin">Admin</span></div>
+</div>
+<div class="sol-card" onclick="selectAccount('Corp · Entry','lxd_abc_entry','ABC Trading Co., Ltd','c')">
+<div class="sol-card-row"><div class="sol-card-av av-c">AB</div><div class="sol-card-info"><div class="sol-card-name">Le Xuan Duong</div><div class="sol-card-user">lxd_abc_entry</div></div></div>
+<div class="sol-card-meta"><span class="badge b-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0114 0"/></svg>Face login</span><span class="b-role b-entry">Entry</span></div>
+</div>
+</div>
+<div class="corp-grp">
+<div class="corp-grp-h"><span class="corp-grp-n">XYZ Logistics JSC</span><span class="corp-grp-l"></span></div>
+<div class="sol-card" onclick="selectAccount('Corp · Admin','lxd_xyz_admin','XYZ Logistics JSC','c')">
+<div class="sol-card-row"><div class="sol-card-av av-c2">XY</div><div class="sol-card-info"><div class="sol-card-name">Le Xuan Duong</div><div class="sol-card-user">lxd_xyz_admin</div></div></div>
+<div class="sol-card-meta"><span class="badge b-face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0114 0"/></svg>Face login</span><span class="b-role b-admin">Admin</span></div>
+</div>
+</div>
+</div>
+
+<div class="sol-pw">Password</div>
+<div class="sol-actions">
+<button class="sol-btn-login">LOG IN</button>
+<div class="sol-btn-face" onclick="faceLoginSelected()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="10" r="1.2" fill="currentColor"/><circle cx="15" cy="10" r="1.2" fill="currentColor"/><path d="M9 15c1 1.5 5 1.5 6 0"/></svg></div>
+</div>
+<div class="sol-links"><a>Other user ID</a><span>|</span><a>Forgot password</a></div>
+
+<div class="sol-shortcuts">
+<div class="sol-sc"><div class="sol-sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>Authenticate PC<br>by Online A-OTP</div>
+<div class="sol-sc"><div class="sol-sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>Register biometric<br>for corporate</div>
+<div class="sol-sc"><div class="sol-sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>Login<br>method</div>
+</div>
+</div>
+
+<!-- ===== SCREEN 1: FACE SCAN ===== -->
+
+<div class="screen hide-right" id="s1">
+<div class="scan-bg" style="min-height:812px;display:flex;flex-direction:column">
+<div class="scan-top">
+<div class="scan-cancel" onclick="goScreen(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Cancel</div>
+<div class="scan-logo"><span style="font-size:9px;font-weight:600;opacity:.5;letter-spacing:.3px">Shinhan</span> <span style="font-weight:800">S<b>o</b>L</span><span style="font-size:12px;opacity:.8"> Vietnam</span></div>
+<div style="width:56px"></div>
+</div>
+<div class="scan-body">
+<div class="scan-type-label" id="scan-type">Corp · Admin</div>
+<div class="scan-ring"><div class="scan-oval"></div></div>
+<div class="scan-txt">Position your face in the frame</div>
+<div class="scan-sub">Perform the actions below</div>
+<div class="scan-pills">
+<span class="sp sp-d">✓ Blink</span>
+<span class="sp sp-a">→ Smile</span>
+<span class="sp sp-p">Turn left</span>
+</div>
+</div>
+<div class="scan-bottom">
+<div class="scan-acc-n" id="scan-company">ABC Trading Co., Ltd</div>
+<div class="scan-acc-t" id="scan-user">lxd_abc_admin</div>
+<div class="scan-ttl">Challenge expires in <span id="scan-timer">58</span>s</div>
+</div>
+<div style="padding:20px;text-align:center">
+<button onclick="goScreen(2)" style="background:#00AAFF;color:#fff;border:none;border-radius:12px;padding:14px 48px;font-size:14px;font-weight:700;cursor:pointer;opacity:.85">Simulate success →</button>
+</div>
+</div>
+</div>
+
+<!-- ===== SCREEN 2: HOME ===== -->
+
+<div class="screen hide-right" id="s2">
+<div class="home-bg" style="min-height:812px;display:flex;flex-direction:column">
+<div class="home-hdr">
+<div class="home-topbar">
+<div class="home-icons">
+<div class="home-noti"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="home-noti-b">9+</div></div>
+<svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+</div>
+<div class="sol-logo"><div class="sol-logo-sm">Shinhan</div><span class="sol-logo-big">S<b>o</b>L</span><span class="sol-logo-vn"> Vietnam</span></div>
+<div class="sol-topbar-r"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><div class="sol-flag">🇬🇧</div></div>
+</div>
+<div class="home-hello">Hello,</div>
+<div class="home-name">LE XUAN DUONG</div>
+<div class="home-type-row">
+<span class="home-tbadge htb-c" id="home-badge">Corp · Admin</span>
+<span class="home-switch" onclick="openSwitchModal()">Switch account</span>
+</div>
+</div>
+
+<div class="home-acct-card">
+<div class="home-acct-r"><div><div class="home-acct-l">Account number</div><div class="home-acct-v">098-908-8686</div></div></div>
+<div class="home-acct-r" style="margin-top:6px"><div><div class="home-acct-l">Balance</div><div class="home-acct-v">****** VND 👁</div></div></div>
+<div class="home-acct-links"><span class="home-acct-lk">Choose default account</span><span class="home-acct-lk">Account details</span></div>
+</div>
+
+<div class="corp-banner" id="corp-banner">
+<div class="corp-bn-icon" id="corp-bn-icon">AB</div>
+<div class="corp-bn-info"><div class="corp-bn-name" id="corp-bn-name">ABC Trading Co., Ltd</div><div class="corp-bn-role" id="corp-bn-role">Role: Admin · CIF: 0012345678</div></div>
+<div class="corp-bn-sw" onclick="openSwitchModal()">Switch</div>
+</div>
+
+<div class="home-section">
+<div class="home-sec-h"><span class="home-sec-t">Banking Services</span><span class="home-sec-m">Arrange</span></div>
+<div class="svc-grid">
+<div class="svc"><div><div class="svc-t">Transfer</div><div class="svc-d">Domestic<br>Overseas</div></div></div>
+<div class="svc"><div><div class="svc-t">Account</div><div class="svc-d">Transaction<br>History</div></div></div>
+<div class="svc"><div><div class="svc-t">Payment</div><div class="svc-d">Utilities<br>Top up</div></div></div>
+<div class="svc"><div><div class="svc-t">Card</div><div class="svc-d">Issuance<br>Status</div></div></div>
+<div class="svc"><div><div class="svc-t">Loan</div><div class="svc-d">New loan<br>My loan</div></div></div>
+<div class="svc"><div><div class="svc-t">Approval</div><div class="svc-d">Pending<br>History</div></div></div>
+</div>
+</div>
+
+<div class="sol-nav">
+<div class="sol-nav-i active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h2"/></svg>Home</div>
+<div class="sol-nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Info</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div class="sol-nav-qr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><span style="font-size:9.5px;color:#AEAEB2">QR</span></div>
+<div class="sol-nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>Guide</div>
+<div class="sol-nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82"/></svg>Settings</div>
+</div>
+
+<!-- SWITCH MODAL -->
+
+<div class="modal-overlay" id="switch-modal">
+<div class="modal-sheet" id="switch-sheet">
+<div class="modal-handle"></div>
+<div class="modal-title">Switch SOL account</div>
+<div class="modal-sub" id="modal-sub">Currently signed in as Corp · Admin</div>
+<div class="sol-tabs" id="switch-tabs"></div>
+<div id="switch-cards" style="max-height:280px;overflow-y:auto;padding:10px 0"></div>
+<div style="text-align:center;padding-top:10px"><span style="font-size:12px;color:#AEAEB2;cursor:pointer" onclick="closeSwitchModal()">Cancel</span></div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="phone-bar"></div>
+</div>
+</div>
+
+<!-- ===== EXPLANATION PANEL ===== -->
+
+<div class="explain-panel">
+<div class="explain-card" id="explain-card">
+<div class="explain-tag" id="ex-tag">Screen 1 of 3</div>
+<div class="explain-title" id="ex-title">Account selection</div>
+<ul class="explain-list" id="ex-list"></ul>
+<div class="explain-nav">
+<button class="btn-prev" id="btn-prev" onclick="goScreen(currentScreen-1)" disabled>← Previous</button>
+<button class="btn-next" id="btn-next" onclick="goScreen(currentScreen+1)">Next →</button>
+</div>
+<div class="step-dots" id="step-dots">
+<div class="step-dot active"></div>
+<div class="step-dot"></div>
+<div class="step-dot"></div>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+let currentScreen = 0;
+let currentAcct = { type:'', user:'', company:'', cat:'' };
+const CORP_COUNT = 3;
+
+const explanations = [
+  {
+    tag: 'Screen 1 of 3 — Login',
+    title: 'Account selection with tabs',
+    items: [
+      'Tab row (Personal / SOHO / Corp) inserted below SOL mascot avatar — minimal disruption to existing SOL layout',
+      'Count badge on each tab shows number of accounts registered on this device',
+      'Personal tab: keeps original SOL password + biometric flow exactly as production',
+      'SOHO tab: "Face login" badge (green) indicates server-side face verification instead of device biometric',
+      'Corp tab: accounts grouped by company name with separator lines — supports multiple companies naturally',
+      'Each Corp card shows role badge (Admin/Entry) for quick identification',
+      'Tap any account card to proceed to face scan (SOHO/Corp) or biometric prompt (Personal)',
+      'Password field + LOG IN + face icon + bottom shortcuts preserved from SOL brand'
+    ]
+  },
+  {
+    tag: 'Screen 2 of 3 — Face scan',
+    title: 'Liveness verification',
+    items: [
+      'Dark background optimized for camera contrast — standard banking face scan UX',
+      'Account type label above scan ring (e.g. "Corp · Admin") — no confusion on which account',
+      'Animated spinning ring provides visual feedback that scan is in progress',
+      'Liveness action pills: ✓ done (green) → active (cyan) → pending (dim)',
+      'Company name + username at bottom — persistent context throughout the scan',
+      'Challenge TTL countdown ("expires in 58s") — user aware of time limit',
+      'Cancel button returns to account selection preserving tab state',
+      '"Simulate success" button for demo — in production, auto-proceeds on successful liveness'
+    ]
+  },
+  {
+    tag: 'Screen 3 of 3 — Home',
+    title: 'Post-login with account context',
+    items: [
+      'SOL header preserved exactly: notification/search + logo + phone/flag',
+      '"Hello, NAME" + dark blue account card matches SOL production home screen',
+      'NEW: Account type badge on header ("Corp · Admin" in purple) — always visible',
+      '"Switch account" link opens bottom sheet with smart tab filtering',
+      'Corp context banner (purple) shows company name + role + CIF — clear company identification',
+      'Banking Services grid adapts per account type (Corp shows Approval)',
+      'Switch logic: Personal → shows SOHO + Corp only; SOHO → Personal + Corp; Corp (1 account) → Personal + SOHO; Corp (2+ accounts) → all 3 tabs',
+      'Bottom nav preserved exactly: Home / Info / QR (prominent) / Guide / Settings'
+    ]
+  }
+];
+
+function goScreen(n) {
+  if (n < 0 || n > 2) return;
+  const prev = currentScreen;
+  currentScreen = n;
+
+  document.querySelectorAll('.screen').forEach((s, i) => {
+    s.classList.remove('active','hide-left','hide-right');
+    if (i === n) s.classList.add('active');
+    else if (i < n) s.classList.add('hide-left');
+    else s.classList.add('hide-right');
+  });
+
+  // Breadcrumb
+  document.querySelectorAll('.bc-item').forEach((b, i) => b.classList.toggle('active', i === n));
+
+  // Explain panel
+  const card = document.getElementById('explain-card');
+  card.classList.add('fade');
+  setTimeout(() => {
+    const e = explanations[n];
+    document.getElementById('ex-tag').textContent = e.tag;
+    document.getElementById('ex-title').textContent = e.title;
+    const list = document.getElementById('ex-list');
+    list.innerHTML = e.items.map(t => '<li>' + t + '</li>').join('');
+    document.getElementById('btn-prev').disabled = n === 0;
+    document.getElementById('btn-next').disabled = n === 2;
+    document.getElementById('btn-next').textContent = n === 2 ? 'Done' : 'Next →';
+    document.querySelectorAll('.step-dot').forEach((d, i) => d.classList.toggle('active', i === n));
+    card.classList.remove('fade');
+  }, 200);
+}
+
+function switchLoginTab(t) {
+  document.querySelectorAll('#login-tabs .sol-tab').forEach(b => b.classList.toggle('active', b.dataset.t === t));
+  document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+  document.getElementById('lp-' + t).style.display = 'block';
+}
+
+function selectAccount(type, user, company, cat) {
+  currentAcct = { type, user, company, cat };
+  document.getElementById('scan-type').textContent = type;
+  document.getElementById('scan-company').textContent = company;
+  document.getElementById('scan-user').textContent = user;
+
+  // Update home screen
+  document.getElementById('home-badge').textContent = type;
+  document.getElementById('home-badge').className = 'home-tbadge ' + (cat==='p'?'htb-p':cat==='s'?'htb-s':'htb-c');
+  const banner = document.getElementById('corp-banner');
+  if (cat === 'c') {
+    banner.style.display = 'flex';
+    document.getElementById('corp-bn-name').textContent = company;
+    document.getElementById('corp-bn-role').textContent = 'Role: ' + type.split('·')[1]?.trim() + ' · CIF: 0012345678';
+    document.getElementById('corp-bn-icon').textContent = company.substring(0,2).toUpperCase();
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // Highlight selected card
+  document.querySelectorAll('.sol-card').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+
+  // Auto navigate to face scan after short delay
+  setTimeout(() => goScreen(1), 350);
+}
+
+function faceLoginSelected() {
+  // Use whatever card is currently selected or first visible
+  if (!currentAcct.type) {
+    selectAccount('Personal','lxduong','Personal account','p');
+  } else {
+    goScreen(1);
+  }
+}
+
+// Timer countdown
+let timerVal = 58;
+setInterval(() => {
+  if (currentScreen === 1 && timerVal > 0) {
+    timerVal--;
+    document.getElementById('scan-timer').textContent = timerVal;
+    if (timerVal <= 0) timerVal = 58;
+  }
+}, 1000);
+
+// ===== SWITCH MODAL LOGIC =====
+function openSwitchModal() {
+  const modal = document.getElementById('switch-modal');
+  const sub = document.getElementById('modal-sub');
+  const tabsEl = document.getElementById('switch-tabs');
+  const cardsEl = document.getElementById('switch-cards');
+
+  sub.textContent = 'Currently signed in as ' + currentAcct.type;
+
+  // Smart tab logic
+  let showTabs = [];
+  if (currentAcct.cat === 'p') {
+    showTabs = ['soho','corp'];
+  } else if (currentAcct.cat === 's') {
+    showTabs = ['personal','corp'];
+  } else {
+    // Corp: if only 1 corp account, hide corp tab
+    if (CORP_COUNT <= 1) {
+      showTabs = ['personal','soho'];
+    } else {
+      showTabs = ['personal','soho','corp'];
+    }
+  }
+
+  const tabLabels = { personal:'Personal', soho:'SOHO', corp:'Corp' };
+  tabsEl.innerHTML = showTabs.map((t, i) =>
+    '<div class="sol-tab' + (i===0?' active':'') + '" data-t="'+t+'" onclick="switchModalTab(\''+t+'\')">' + tabLabels[t] + '</div>'
+  ).join('');
+
+  renderModalCards(showTabs[0]);
+  modal.classList.add('show');
+}
+
+function closeSwitchModal() {
+  document.getElementById('switch-modal').classList.remove('show');
+}
+
+function switchModalTab(t) {
+  document.querySelectorAll('#switch-tabs .sol-tab').forEach(b => b.classList.toggle('active', b.dataset.t === t));
+  renderModalCards(t);
+}
+
+const allAccounts = {
+  personal: [{ name:'Le Xuan Duong', user:'lxduong', av:'LD', avc:'av-p', type:'Personal', cat:'p', company:'Personal account', badges:'<span class="badge b-bio">Biometric</span>' }],
+  soho: [{ name:'Cua hang Thanh Dat', user:'lxd_soho01', av:'TD', avc:'av-s', type:'SOHO', cat:'s', company:'Cua hang Thanh Dat', badges:'<span class="badge b-face">Face login</span><span class="b-role b-soho">SOHO</span>' }],
+  corp: [
+    { name:'Le Xuan Duong', user:'lxd_abc_admin', av:'AB', avc:'av-c', type:'Corp · Admin', cat:'c', company:'ABC Trading Co., Ltd', badges:'<span class="badge b-face">Face login</span><span class="b-role b-admin">Admin</span>', grp:'ABC Trading Co., Ltd' },
+    { name:'Le Xuan Duong', user:'lxd_abc_entry', av:'AB', avc:'av-c', type:'Corp · Entry', cat:'c', company:'ABC Trading Co., Ltd', badges:'<span class="badge b-face">Face login</span><span class="b-role b-entry">Entry</span>', grp:'ABC Trading Co., Ltd' },
+    { name:'Le Xuan Duong', user:'lxd_xyz_admin', av:'XY', avc:'av-c2', type:'Corp · Admin', cat:'c', company:'XYZ Logistics JSC', badges:'<span class="badge b-face">Face login</span><span class="b-role b-admin">Admin</span>', grp:'XYZ Logistics JSC' },
+  ]
+};
+
+function renderModalCards(tab) {
+  const el = document.getElementById('switch-cards');
+  const accts = allAccounts[tab] || [];
+  let html = '';
+
+  if (tab === 'corp') {
+    const groups = {};
+    accts.forEach(a => { if (!groups[a.grp]) groups[a.grp]=[]; groups[a.grp].push(a); });
+    for (const [grp, items] of Object.entries(groups)) {
+      html += '<div style="padding:0 4px"><div class="corp-grp-h"><span class="corp-grp-n">'+grp+'</span><span class="corp-grp-l"></span></div></div>';
+      items.forEach(a => { html += modalCard(a); });
+    }
+  } else {
+    accts.forEach(a => { html += modalCard(a); });
+  }
+  el.innerHTML = html;
+}
+
+function modalCard(a) {
+  return '<div class="sol-card" style="margin:0 4px 8px" onclick="switchToAccount(\''+a.type+'\',\''+a.user+'\',\''+a.company+'\',\''+a.cat+'\')">' +
+    '<div class="sol-card-row"><div class="sol-card-av '+a.avc+'">'+a.av+'</div><div class="sol-card-info"><div class="sol-card-name">'+a.name+'</div><div class="sol-card-user">'+a.user+'</div></div></div>' +
+    '<div class="sol-card-meta">'+a.badges+'</div></div>';
+}
+
+function switchToAccount(type, user, company, cat) {
+  closeSwitchModal();
+  currentAcct = { type, user, company, cat };
+  document.getElementById('home-badge').textContent = type;
+  document.getElementById('home-badge').className = 'home-tbadge ' + (cat==='p'?'htb-p':cat==='s'?'htb-s':'htb-c');
+  const banner = document.getElementById('corp-banner');
+  if (cat === 'c') {
+    banner.style.display = 'flex';
+    document.getElementById('corp-bn-name').textContent = company;
+    document.getElementById('corp-bn-role').textContent = 'Role: ' + (type.split('·')[1]?.trim()||'Admin') + ' · CIF: 0012345678';
+    document.getElementById('corp-bn-icon').textContent = company.substring(0,2).toUpperCase();
+  } else {
+    banner.style.display = 'none';
+  }
+  // Flash the badge
+  const badge = document.getElementById('home-badge');
+  badge.style.transform = 'scale(1.15)';
+  setTimeout(() => badge.style.transform = '', 300);
+}
+
+// Close modal on overlay click
+document.getElementById('switch-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeSwitchModal();
+});
+
+// Init
+goScreen(0);
+</script>
+
+</body>
+</html>
