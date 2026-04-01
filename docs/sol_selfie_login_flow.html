@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOL Face Login — Login Flow</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8f8f6;color:#1a1a1a;padding:24px;max-width:780px;margin:0 auto}
+h1{font-size:18px;font-weight:600;margin-bottom:4px}
+.subtitle{font-size:13px;color:#888;margin-bottom:20px}
+.diagram-wrap{background:#fff;border-radius:12px;border:1px solid #e8e8e4;padding:16px;margin-bottom:20px;overflow-x:auto}
+svg text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.lh{font-size:13px;font-weight:600;fill:#fff}
+.bt{font-size:12.5px;font-weight:600}
+.bs{font-size:11px;opacity:.7}
+.al{font-size:11px;font-weight:500;fill:#555}
+.as{font-size:10px;fill:#999}
+.zl{font-size:10.5px;font-weight:600;letter-spacing:.3px}
+.pl{font-size:11px;font-weight:600;fill:#0f8a5f}
+.fl{font-size:10.5px;fill:#d03030}
+.nb{cursor:pointer;transition:opacity .15s}
+.nb:hover{opacity:.85}
+
+.gate-zone{fill:none;stroke-dasharray:5 3;opacity:.3}
+
+.api-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+@media(max-width:700px){.api-grid{grid-template-columns:1fr}}
+.api-card{background:#fff;border:1px solid #e8e8e4;border-radius:10px;padding:12px 16px}
+.api-head{font-size:13px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.ab{font-family:monospace;font-size:10px;padding:2px 7px;border-radius:4px;font-weight:700;background:#e6f4ea;color:#1a7f3c}
+.ae{font-family:monospace;font-size:11px;color:#666;margin-bottom:8px;word-break:break-all}
+.ar{font-size:11.5px;color:#777;line-height:1.7}
+.ar b{font-weight:600;color:#444}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:#888}
+.li{display:flex;align-items:center;gap:5px}
+.ld{width:12px;height:12px;border-radius:3px}
+
+.section-title{font-size:15px;font-weight:600;margin-top:24px;margin-bottom:12px}
+
+.guard-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+@media(max-width:700px){.guard-grid{grid-template-columns:1fr 1fr}}
+.guard-card{background:#fff;border-radius:8px;border:1px solid #e8e8e4;padding:10px 12px}
+.guard-num{font-size:20px;font-weight:700;margin-bottom:4px}
+.guard-label{font-size:11px;color:#888;line-height:1.4}
+.guard-red{color:#d03030}
+.guard-amber{color:#b87515}
+.guard-teal{color:#0f6e56}
+.guard-purple{color:#534AB7}
+</style>
+</head>
+<body>
+<h1>SOL face login — Login flow</h1>
+<p class="subtitle">Swimlane: App / Server / Kalapa eKYC &nbsp;|&nbsp; No session (public endpoint) &nbsp;|&nbsp; User type: SOHO / CORP only</p>
+
+<div class="guard-grid">
+<div class="guard-card"><div class="guard-num guard-red">5</div><div class="guard-label">Max failed attempts before LOCK</div></div>
+<div class="guard-card"><div class="guard-num guard-amber">15 min</div><div class="guard-label">Rate limit window (per device + IP)</div></div>
+<div class="guard-card"><div class="guard-num guard-teal">60s</div><div class="guard-label">Challenge nonce TTL</div></div>
+<div class="guard-card"><div class="guard-num guard-purple">6 mo</div><div class="guard-label">Combo key expiry</div></div>
+</div>
+
+<div class="diagram-wrap" style="margin-top:20px">
+<svg width="100%" viewBox="0 0 700 1060" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<!-- Lane headers -->
+<rect x="6" y="2" width="196" height="32" rx="6" fill="#0F6E56"/>
+<text class="lh" x="104" y="22" text-anchor="middle">SOL mobile app</text>
+<rect x="216" y="2" width="248" height="32" rx="6" fill="#534AB7"/>
+<text class="lh" x="340" y="22" text-anchor="middle">Shinhan server</text>
+<rect x="478" y="2" width="216" height="32" rx="6" fill="#854F0B"/>
+<text class="lh" x="586" y="22" text-anchor="middle">Kalapa eKYC</text>
+
+<!-- Separators -->
+<line x1="209" y1="38" x2="209" y2="1052" stroke="#ddd" stroke-width=".5" stroke-dasharray="4 3"/>
+<line x1="471" y1="38" x2="471" y2="1052" stroke="#ddd" stroke-width=".5" stroke-dasharray="4 3"/>
+<line x1="104" y1="38" x2="104" y2="1052" stroke="#e0e0e0" stroke-width=".5" stroke-dasharray="2 6"/>
+<line x1="340" y1="38" x2="340" y2="1052" stroke="#e0e0e0" stroke-width=".5" stroke-dasharray="2 6"/>
+<line x1="586" y1="38" x2="586" y2="1052" stroke="#e0e0e0" stroke-width=".5" stroke-dasharray="2 6"/>
+
+<!-- ===== STEP 1: App — User list ===== -->
+<g class="nb">
+<rect x="18" y="50" width="172" height="60" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width=".5"/>
+<text class="bt" x="104" y="70" text-anchor="middle" fill="#085041">User account list</text>
+<text class="bs" x="104" y="86" text-anchor="middle" fill="#0F6E56">Read encrypted local store</text>
+<text class="bs" x="104" y="100" text-anchor="middle" fill="#0F6E56">Show login badges</text>
+</g>
+
+<!-- ===== STEP 2: App — Select account ===== -->
+<g class="nb">
+<rect x="18" y="128" width="172" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width=".5"/>
+<text class="bt" x="104" y="146" text-anchor="middle" fill="#085041">Select SOHO/CORP</text>
+<text class="bs" x="104" y="162" text-anchor="middle" fill="#0F6E56">face_login_enabled = true</text>
+</g>
+
+<!-- ===== ARROW: App → Server (challenge) ===== -->
+<line x1="104" y1="198" x2="340" y2="198" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="al" x="222" y="190" text-anchor="middle">POST /face-login/challenge</text>
+<text class="as" x="222" y="210" text-anchor="middle">NO cookie — public endpoint | user_id + device_binding_id</text>
+
+<!-- ===== SERVER GATE ZONE: Pre-check ===== -->
+<rect x="216" y="222" width="248" height="168" rx="10" class="gate-zone" stroke="#185FA5"/>
+<text class="zl" x="340" y="237" text-anchor="middle" fill="#185FA5" opacity=".6">PRE-FLIGHT SECURITY GATE</text>
+
+<!-- Gate 1: Rate limit -->
+<g class="nb">
+<rect x="226" y="246" width="228" height="32" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width=".5"/>
+<text class="bt" x="340" y="266" text-anchor="middle" fill="#0C447C" font-size="11.5">Rate limit check (5 req / 15 min)</text>
+</g>
+<line x1="454" y1="262" x2="478" y2="262" stroke="#d03030" stroke-width="1" marker-end="url(#arr)"/>
+<text class="fl" x="484" y="260">429 Too many</text>
+<text class="fl" x="484" y="272">requests</text>
+
+<!-- Gate 2: Combo key exists + ACTIVE -->
+<g class="nb">
+<rect x="226" y="288" width="228" height="32" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width=".5"/>
+<text class="bt" x="340" y="308" text-anchor="middle" fill="#0C447C" font-size="11.5">Combo key exists + ACTIVE?</text>
+</g>
+<line x1="454" y1="304" x2="478" y2="304" stroke="#d03030" stroke-width="1" marker-end="url(#arr)"/>
+<text class="fl" x="484" y="302">401 Not found /</text>
+<text class="fl" x="484" y="314">REVOKED / LOCKED</text>
+
+<!-- Gate 3: Not expired -->
+<g class="nb">
+<rect x="226" y="330" width="228" height="32" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width=".5"/>
+<text class="bt" x="340" y="350" text-anchor="middle" fill="#0C447C" font-size="11.5">expires_at > NOW()?</text>
+</g>
+<line x1="454" y1="346" x2="478" y2="346" stroke="#d03030" stroke-width="1" marker-end="url(#arr)"/>
+<text class="fl" x="484" y="344">401 Expired</text>
+<text class="fl" x="484" y="356">→ re-register</text>
+
+<!-- Gate 4: fail_count < 5 -->
+<g class="nb">
+<rect x="226" y="370" width="228" height="32" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width=".5"/>
+<text class="bt" x="340" y="390" text-anchor="middle" fill="#0C447C" font-size="11.5">fail_count &lt; 5?</text>
+</g>
+<line x1="454" y1="386" x2="478" y2="386" stroke="#d03030" stroke-width="1" marker-end="url(#arr)"/>
+<text class="fl" x="484" y="384">423 Locked</text>
+<text class="fl" x="484" y="396">→ use password</text>
+
+<!-- All gates passed -->
+<text class="pl" x="340" y="414" text-anchor="middle">All gates passed</text>
+
+<!-- ===== Generate challenge ===== -->
+<g class="nb">
+<rect x="226" y="424" width="228" height="44" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width=".5"/>
+<text class="bt" x="340" y="440" text-anchor="middle" fill="#3C3489">Generate challenge</text>
+<text class="bs" x="340" y="456" text-anchor="middle" fill="#534AB7">nonce + liveness_actions (TTL 60s)</text>
+</g>
+
+<!-- ===== ARROW: Server → App (challenge) ===== -->
+<line x1="340" y1="490" x2="104" y2="490" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="al" x="222" y="482" text-anchor="middle">Challenge response</text>
+<text class="as" x="222" y="502" text-anchor="middle">challenge_id + nonce + liveness_actions</text>
+
+<!-- ===== STEP: App — Capture selfie ===== -->
+<g class="nb">
+<rect x="18" y="516" width="172" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width=".5"/>
+<text class="bt" x="104" y="534" text-anchor="middle" fill="#085041">Capture selfie</text>
+<text class="bs" x="104" y="550" text-anchor="middle" fill="#0F6E56">Kalapa Liveness SDK</text>
+</g>
+
+<!-- ===== ARROW: App → Server (verify) ===== -->
+<line x1="104" y1="586" x2="340" y2="586" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="al" x="222" y="578" text-anchor="middle">POST /face-login/verify</text>
+<text class="as" x="222" y="598" text-anchor="middle">NO cookie | selfie + challenge_id + nonce + user_id</text>
+
+<!-- ===== Server — Validate challenge ===== -->
+<g class="nb">
+<rect x="226" y="610" width="228" height="44" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width=".5"/>
+<text class="bt" x="340" y="626" text-anchor="middle" fill="#3C3489">Validate challenge</text>
+<text class="bs" x="340" y="642" text-anchor="middle" fill="#534AB7">Nonce + TTL + device binding</text>
+</g>
+
+<!-- ===== ARROW: Server → Kalapa ===== -->
+<line x1="340" y1="676" x2="586" y2="676" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="al" x="463" y="668" text-anchor="middle">POST /kalapa/face/verify</text>
+<text class="as" x="463" y="688" text-anchor="middle">id_no + selfie + liveness_data</text>
+
+<!-- ===== Kalapa — Face verification ===== -->
+<g class="nb">
+<rect x="482" y="700" width="208" height="48" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width=".5"/>
+<text class="bt" x="586" y="718" text-anchor="middle" fill="#633806">Face verification</text>
+<text class="bs" x="586" y="734" text-anchor="middle" fill="#854F0B">Liveness + face match</text>
+</g>
+
+<!-- ===== ARROW: Kalapa → Server ===== -->
+<line x1="586" y1="770" x2="340" y2="770" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="al" x="463" y="762" text-anchor="middle">Verification result</text>
+<text class="as" x="463" y="782" text-anchor="middle">match_score + liveness_passed</text>
+
+<!-- ===== FAIL COUNT ZONE ===== -->
+<rect x="216" y="796" width="248" height="142" rx="10" class="gate-zone" stroke="#D85A30"/>
+<text class="zl" x="340" y="810" text-anchor="middle" fill="#D85A30" opacity=".7">FAIL COUNT ENFORCEMENT</text>
+
+<!-- Decision -->
+<g class="nb">
+<rect x="226" y="818" width="228" height="36" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width=".5"/>
+<text class="bt" x="340" y="840" text-anchor="middle" fill="#712B13">score ≥ 0.85 && liveness?</text>
+</g>
+
+<!-- Fail branch (right) -->
+<line x1="454" y1="836" x2="478" y2="836" stroke="#d03030" stroke-width="1" marker-end="url(#arr)"/>
+<text class="fl" x="484" y="830">Fail: fail_count++</text>
+<text class="fl" x="484" y="842">If ≥ 5 → status = LOCKED</text>
+<text class="fl" x="484" y="854">Return remaining attempts</text>
+
+<!-- Pass -->
+<text class="pl" x="346" y="864">Pass</text>
+
+<!-- Success actions -->
+<g class="nb">
+<rect x="226" y="874" width="228" height="52" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width=".5"/>
+<text class="bt" x="340" y="892" text-anchor="middle" fill="#712B13">Create session + reset</text>
+<text class="bs" x="340" y="908" text-anchor="middle" fill="#993C1D">fail_count=0, last_used_at=NOW()</text>
+<text class="bs" x="340" y="922" text-anchor="middle" fill="#993C1D">+ audit log</text>
+</g>
+
+<!-- ===== ARROW: Server → App (success) ===== -->
+<line x1="340" y1="960" x2="104" y2="960" stroke="#888" stroke-width="1.2" marker-end="url(#arr)"/>
+<text class="al" x="222" y="952" text-anchor="middle">200 OK</text>
+<text class="as" x="222" y="972" text-anchor="middle">Set-Cookie: JSESSIONID (HttpOnly, Secure, SameSite=Strict)</text>
+
+<!-- ===== STEP: App — Navigate home ===== -->
+<g class="nb">
+<rect x="18" y="988" width="172" height="48" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width=".5"/>
+<text class="bt" x="104" y="1006" text-anchor="middle" fill="#085041">Navigate to Home</text>
+<text class="bs" x="104" y="1022" text-anchor="middle" fill="#0F6E56">HTTP client stores cookie</text>
+</g>
+
+</svg>
+</div>
+
+<div class="legend">
+<div class="li"><div class="ld" style="background:#E1F5EE;border:1px solid #0F6E56"></div>App (client-side)</div>
+<div class="li"><div class="ld" style="background:#EEEDFE;border:1px solid #534AB7"></div>Server (Shinhan)</div>
+<div class="li"><div class="ld" style="background:#FAEEDA;border:1px solid #854F0B"></div>Kalapa eKYC</div>
+<div class="li"><div class="ld" style="background:#E6F1FB;border:1px solid #185FA5"></div>Pre-flight gate</div>
+<div class="li"><div class="ld" style="background:#FAECE7;border:1px solid #993C1D"></div>Fail count enforcement</div>
+</div>
+
+<h2 class="section-title">API endpoint reference</h2>
+
+<div class="api-grid">
+<div class="api-card">
+<div class="api-head"><span class="ab">POST</span>Challenge (login)</div>
+<div class="ae">/api/v1/face-login/challenge</div>
+<div class="ar">
+<b>Headers:</b> None (public endpoint, NO cookie)<br>
+<b>Body:</b> user_id, device_binding_id, action: "login"<br>
+<b>Pre-flight:</b> rate limit → combo key ACTIVE → not expired → fail_count &lt; 5<br>
+<b>Response:</b> challenge_id, nonce, liveness_actions[]<br>
+<b>Error codes:</b> 429 (rate limited), 401 (not found / revoked / expired), 423 (locked)
+</div>
+</div>
+<div class="api-card">
+<div class="api-head"><span class="ab">POST</span>Verify (login)</div>
+<div class="ae">/api/v1/face-login/verify</div>
+<div class="ar">
+<b>Headers:</b> None (public endpoint)<br>
+<b>Body:</b> selfie (base64), challenge_id, nonce, user_id<br>
+<b>Logic:</b> validate challenge → Kalapa verify → score check → session create<br>
+<b>On success:</b> Set-Cookie: JSESSIONID, fail_count = 0, last_used_at = NOW()<br>
+<b>On fail:</b> fail_count++, if ≥ 5 → LOCK, return remaining_attempts<br>
+<b>Response:</b> 200 OK + user_info | 401 fail + remaining | 423 locked
+</div>
+</div>
+</div>
+
+<h2 class="section-title">Fail count state machine</h2>
+<div class="diagram-wrap">
+<svg width="100%" viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<!-- States -->
+<rect x="18" y="40" width="100" height="40" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width=".5"/>
+<text x="68" y="64" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">count = 0</text>
+
+<rect x="152" y="40" width="100" height="40" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width=".5"/>
+<text x="202" y="64" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">count = 1</text>
+
+<rect x="286" y="40" width="100" height="40" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width=".5"/>
+<text x="336" y="64" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">count = 2..3</text>
+
+<rect x="420" y="40" width="100" height="40" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width=".5"/>
+<text x="470" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#633806">count = 4</text>
+<text x="470" y="72" text-anchor="middle" font-size="10" fill="#854F0B">⚠ last chance</text>
+
+<rect x="554" y="40" width="120" height="40" rx="8" fill="#FCEBEB" stroke="#A32D2D" stroke-width=".5"/>
+<text x="614" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#791F1F">LOCKED</text>
+<text x="614" y="72" text-anchor="middle" font-size="10" fill="#A32D2D">status = LOCKED</text>
+
+<!-- Fail arrows (top) -->
+<line x1="118" y1="55" x2="150" y2="55" stroke="#d03030" stroke-width="1" marker-end="url(#arr2)"/>
+<line x1="252" y1="55" x2="284" y2="55" stroke="#d03030" stroke-width="1" marker-end="url(#arr2)"/>
+<line x1="386" y1="55" x2="418" y2="55" stroke="#d03030" stroke-width="1" marker-end="url(#arr2)"/>
+<line x1="520" y1="55" x2="552" y2="55" stroke="#d03030" stroke-width="1" marker-end="url(#arr2)"/>
+
+<text x="134" y="48" text-anchor="middle" font-size="9" fill="#d03030">fail</text>
+<text x="268" y="48" text-anchor="middle" font-size="9" fill="#d03030">fail</text>
+<text x="402" y="48" text-anchor="middle" font-size="9" fill="#d03030">fail</text>
+<text x="536" y="48" text-anchor="middle" font-size="9" fill="#d03030">fail</text>
+
+<!-- Success arrow (reset, curved bottom) -->
+<path d="M202,80 L202,120 L68,120 L68,82" fill="none" stroke="#0f8a5f" stroke-width="1" marker-end="url(#arr2)"/>
+<text x="135" y="136" text-anchor="middle" font-size="10" fill="#0f8a5f" font-weight="600">success → reset to 0</text>
+
+<path d="M336,80 L336,146 L68,146 L68,122" fill="none" stroke="#0f8a5f" stroke-width="1" stroke-dasharray="3 2" opacity=".5"/>
+<path d="M470,80 L470,160 L68,160 L68,148" fill="none" stroke="#0f8a5f" stroke-width="1" stroke-dasharray="3 2" opacity=".5"/>
+
+<!-- Recovery from LOCKED -->
+<path d="M614,80 L614,168 L68,168 L68,160" fill="none" stroke="#534AB7" stroke-width="1" stroke-dasharray="4 2" opacity=".5"/>
+<text x="340" y="178" text-anchor="middle" font-size="10" fill="#534AB7" font-weight="500">Password login → re-register face login → new combo key (count = 0)</text>
+
+</svg>
+</div>
+
+</body>
+</html>
