@@ -3,270 +3,359 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Ha Giang - Cao Bang - Lang Son | Apr 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Hành Trình Đông Bắc | Tháng 4.2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    fontFamily: {
+      sans: ['Open Sans', 'sans-serif'],
+    },
+    extend: {
+      colors: {
+        neon: '#39FF14',
+        'neon-dark': '#2bcc10',
+        'neon-darker': '#1a8a0a',
+      },
+      keyframes: {
+        fadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(24px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        glow: {
+          '0%, 100%': { opacity: '0.5' },
+          '50%': { opacity: '1' },
+        },
+      },
+      animation: {
+        'fade-1': 'fadeUp 0.7s 0.1s both',
+        'fade-2': 'fadeUp 0.7s 0.25s both',
+        'fade-3': 'fadeUp 0.7s 0.4s both',
+        'fade-4': 'fadeUp 0.7s 0.55s both',
+        'fade-5': 'fadeUp 0.7s 0.7s both',
+        'glow': 'glow 2s infinite',
+      },
+    },
+  },
+}
+</script>
 <style type="text/css">
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:'Be Vietnam Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background-color:#0f1114;color:#e8e6e1;line-height:1.6;min-height:100vh;overflow-x:hidden}
-.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px 48px;overflow:hidden;background:radial-gradient(ellipse at 30% 20%,rgba(232,196,108,0.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(107,163,207,0.06) 0%,transparent 50%),#0f1114}
-.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#e8c46c;margin-bottom:16px;opacity:0;animation:fu 0.8s 0.3s forwards}
-.hero h1{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:40px;line-height:1.1;color:#e8e6e1;margin-bottom:8px;opacity:0;animation:fu 0.8s 0.5s forwards}
-.hero h1 em{font-style:italic;color:#e8c46c}
-.hero-sub{font-size:15px;color:#8a8d93;font-weight:300;margin-bottom:32px;opacity:0;animation:fu 0.8s 0.7s forwards}
-.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background-color:#2a2f38;border-radius:16px;overflow:hidden;opacity:0;animation:fu 0.8s 0.9s forwards}
-.hero-stat{background-color:#181b20;padding:16px 12px;text-align:center}
-.hero-stat b{display:block;font-family:'Playfair Display',Georgia,serif;font-size:24px;color:#e8c46c;font-weight:700}
-.hero-stat small{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#8a8d93}
-@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.nav{position:sticky;top:0;z-index:100;background-color:rgba(15,17,20,0.95);border-bottom:1px solid #2a2f38;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.nav::-webkit-scrollbar{display:none}
-.nav-inner{display:flex;min-width:max-content;padding:0 16px}
-.nav a{flex-shrink:0;padding:14px 16px;font-size:12px;font-weight:500;color:#8a8d93;text-decoration:none;border-bottom:2px solid transparent;transition:color 0.3s,border-color 0.3s;white-space:nowrap;-webkit-tap-highlight-color:transparent}
-.nav a.active{color:#e8c46c;border-bottom-color:#e8c46c}
-.day{border-bottom:1px solid #2a2f38}
-.day-head{padding:32px 20px 24px;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative}
-.day-date{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#e8c46c;margin-bottom:8px}
-.day-name{font-family:'Playfair Display',Georgia,serif;font-size:24px;font-weight:700;line-height:1.2;margin-bottom:6px;padding-right:40px}
-.day-route{font-size:13px;color:#8a8d93;font-weight:300}
-.day-route b{color:#cf9a6b;font-weight:500}
-.day-arrow{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background-color:#1e2228;border:1px solid #2a2f38;display:flex;align-items:center;justify-content:center}
-.day-arrow svg{width:14px;height:14px;fill:none;stroke:#8a8d93;stroke-width:2;transition:transform 0.3s}
-.day.open .day-arrow svg{transform:rotate(180deg)}
+html{scroll-behavior:smooth}
+body{-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:0;height:0}
+::selection{background:rgba(57,255,20,0.25)}
 .day-body{max-height:0;overflow:hidden;transition:max-height 0.5s ease}
-.day.open .day-body{max-height:4000px}
-.day-inner{padding:0 20px 32px}
-.tl{position:relative;padding-left:28px}
-.tl::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,#e8c46c,#2a2f38 50%,#e8c46c)}
-.ti{position:relative;padding-bottom:24px}
-.ti:last-child{padding-bottom:0}
-.ti-dot{position:absolute;left:-28px;top:4px;width:15px;height:15px;border-radius:50%;background-color:#0f1114;border:2px solid #2a2f38}
-.ti.hl .ti-dot{border-color:#e8c46c;background-color:#e8c46c;box-shadow:0 0 12px rgba(232,196,108,0.3)}
-.ti.fd .ti-dot{border-color:#cf9a6b}
-.ti.cu .ti-dot{border-color:#6bcf8e}
-.ti.mv .ti-dot{border-color:#6ba3cf}
-.ti.sl .ti-dot{border-color:#cf6b6b;background-color:#cf6b6b}
-.ti-time{font-size:11px;font-weight:600;letter-spacing:1px;color:#8a8d93;margin-bottom:2px}
-.ti-name{font-size:15px;font-weight:600;margin-bottom:2px}
-.ti-desc{font-size:13px;color:#8a8d93;font-weight:300;line-height:1.5}
-.tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-top:6px}
-.tag-f{background-color:rgba(207,154,107,0.15);color:#cf9a6b}
-.tag-c{background-color:rgba(107,207,142,0.15);color:#6bcf8e}
-.tag-s{background-color:rgba(107,163,207,0.15);color:#6ba3cf}
-.tag-n{background-color:rgba(207,107,107,0.15);color:#cf6b6b}
-.tip{background-color:#181b20;border:1px solid #2a2f38;border-radius:12px;padding:14px 16px;margin-top:20px}
-.tip b{display:block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8c46c;margin-bottom:6px}
-.tip p{font-size:13px;color:#8a8d93;font-weight:300;line-height:1.6}
-.budget{padding:32px 20px}
-.budget h2{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;margin-bottom:20px}
-.budget h2 em{color:#e8c46c;font-style:italic}
-.bg{display:flex;flex-direction:column;gap:1px;background-color:#2a2f38;border-radius:16px;overflow:hidden;margin-bottom:16px}
-.br{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background-color:#181b20;font-size:14px}
-.br.tot{background-color:#1e2228;font-weight:700}
-.br span:last-child{color:#e8c46c;font-weight:600}
-.br.tot span:last-child{font-size:18px}
-.budget small{display:block;font-size:12px;color:#8a8d93;font-weight:300;line-height:1.6}
-.pack{padding:0 20px 40px}
-.pack h2{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;margin-bottom:16px}
-.pack-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pack-item{background-color:#181b20;border:1px solid #2a2f38;border-radius:10px;padding:12px;font-size:13px;display:flex;align-items:center;gap:8px}
-.foot{text-align:center;padding:32px 20px;border-top:1px solid #2a2f38;font-size:12px;color:#8a8d93}
-.foot a{color:#e8c46c;text-decoration:none}
-::-webkit-scrollbar{width:0}
-::selection{background:rgba(232,196,108,0.3)}
+.day.open .day-body{max-height:5000px}
+.day.open .chev{transform:rotate(180deg)}
+.chev{transition:transform 0.3s}
+.neon-glow{text-shadow:0 0 8px rgba(57,255,20,0.4)}
+.neon-dot{box-shadow:0 0 8px rgba(57,255,20,0.5)}
 </style>
 </head>
-<body>
+<body class="bg-black text-white font-sans">
 
-<section class="hero">
-  <div class="hero-eyebrow">Dong Bac Viet Nam - Thang 4.2026</div>
-  <h1>Ha Giang<br><em>Cao Bang</em><br>Lang Son</h1>
-  <p class="hero-sub">Duong &amp; Long — 6 dem xuyen cao nguyen da,<br>ban lang dan toc &amp; bien cuong To Quoc</p>
-  <div class="hero-stats">
-    <div class="hero-stat"><b>6</b><small>Ngay</small></div>
-    <div class="hero-stat"><b>~800</b><small>KM</small></div>
-    <div class="hero-stat"><b>5</b><small>Tinh</small></div>
+<!-- ═══ HERO ═══ -->
+
+<section class="relative min-h-screen flex flex-col justify-end px-6 pb-12 overflow-hidden">
+  <!-- BG -->
+  <div class="absolute inset-0 bg-gradient-to-br from-green-950/40 via-black to-black"></div>
+  <!-- Topo lines -->
+  <svg class="absolute inset-0 w-full h-full opacity-[0.07]" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#39FF14" stroke-width="0.5">
+    <path d="M-20,100Q100,80 200,120T420,90"/><path d="M-20,180Q80,150 180,190T420,170"/>
+    <path d="M-20,260Q120,230 220,270T420,250"/><path d="M-20,340Q90,310 190,350T420,330"/>
+    <path d="M-20,420Q110,390 210,430T420,410"/><path d="M-20,500Q80,470 200,510T420,490"/>
+    <path d="M-20,580Q120,550 220,590T420,570"/><path d="M-20,660Q90,630 190,670T420,650"/>
+    <path d="M-20,740Q110,710 210,750T420,730"/>
+  </svg>
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black"></div>
+
+  <div class="relative z-10">
+    <div class="animate-fade-1 inline-flex items-center gap-2 px-4 py-1.5 border border-neon/30 rounded-full text-[10px] font-bold tracking-[3px] uppercase text-neon mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-neon animate-glow"></span>
+      Hành trình Đông Bắc
+    </div>
+
+```
+<h1 class="animate-fade-2 text-[15vw] font-extrabold leading-[0.9] tracking-tight">
+  <span>Hà Giang</span>
+  <span class="text-neon italic font-semibold neon-glow">Cao Bằng</span>
+  <span class="text-white/50 font-light text-[0.55em]">Lạng Sơn</span>
+</h1>
+
+<div class="animate-fade-3 flex gap-6 mt-5 mb-8 text-xs text-gray-400">
+  <span><strong class="text-neon font-bold">6</strong> ngày</span>
+  <span><strong class="text-neon font-bold">~800</strong> km</span>
+  <span><strong class="text-neon font-bold">5</strong> tỉnh</span>
+</div>
+
+<div class="animate-fade-4 w-12 h-0.5 bg-gradient-to-r from-neon to-transparent mb-5"></div>
+
+<p class="animate-fade-5 text-sm text-gray-300 max-w-xs leading-relaxed">
+  Dương &amp; Long — Xuyên cao nguyên đá, ngủ bản Lô Lô Đen, khám phá biên cương Tổ Quốc. Tháng 4, 2026.
+</p>
+```
+
   </div>
 </section>
 
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="#d0" class="active">Dem 0</a>
-    <a href="#d1">Ngay 1</a>
-    <a href="#d2">Ngay 2</a>
-    <a href="#d3">Ngay 3</a>
-    <a href="#d4">Ngay 4</a>
-    <a href="#d5">Ngay 5</a>
-    <a href="#cost">Chi phi</a>
+<!-- ═══ ROUTE STRIP ═══ -->
+
+<div class="py-8 border-b border-gray-900 overflow-hidden">
+  <div class="px-6 text-[10px] font-bold tracking-[3px] uppercase text-neon-dark mb-5">Cung đường</div>
+  <div class="overflow-x-auto px-6" style="scrollbar-width:none">
+    <div class="flex items-center min-w-max gap-0">
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Hà Nội</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Hà Giang</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-1.5 h-1.5 rounded-full bg-neon-darker mx-auto mb-2"></div><div class="text-[10px] font-semibold text-gray-500">Quản Bạ</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Đồng Văn</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Mèo Vạc</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-1.5 h-1.5 rounded-full bg-neon-darker mx-auto mb-2"></div><div class="text-[10px] font-semibold text-gray-500">Bảo Lâm</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Bảo Lạc</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-1.5 h-1.5 rounded-full bg-neon-darker mx-auto mb-2"></div><div class="text-[10px] font-semibold text-gray-500">Pác Bó</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Cao Bằng</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Bản Giốc</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Lạng Sơn</div></div>
+      <div class="w-8 h-px bg-neon-darker shrink-0 mx-1 -translate-y-3"></div>
+      <div class="text-center shrink-0"><div class="w-2.5 h-2.5 rounded-full bg-neon neon-dot mx-auto mb-2"></div><div class="text-[10px] font-semibold text-neon">Nội Bài</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NAV ═══ -->
+
+<nav class="sticky top-0 z-50 bg-black/95 border-b border-gray-900 overflow-x-auto" style="scrollbar-width:none" id="nav">
+  <div class="flex min-w-max px-4">
+    <a href="#d0" class="ntab active shrink-0 px-3.5 py-4 text-[11px] font-bold tracking-wide uppercase text-gray-600 border-b-2 border-transparent no-underline whitespace-nowrap">Đêm 0</a>
+    <a href="#d1" class="ntab shrink-0 px-3.5 py-4 text-[11px] font-bold tracking-wide uppercase text-gray-600 border-b-2 border-transparent no-underline whitespace-nowrap">Ngày 1</a>
+    <a href="#d2" class="ntab shrink-0 px-3.5 py-4 text-[11px] font-bold tracking-wide uppercase text-gray-600 border-b-2 border-transparent no-underline whitespace-nowrap">Ngày 2</a>
+    <a href="#d3" class="ntab shrink-0 px-3.5 py-4 text-[11px] font-bold tracking-wide uppercase text-gray-600 border-b-2 border-transparent no-underline whitespace-nowrap">Ngày 3</a>
+    <a href="#d4" class="ntab shrink-0 px-3.5 py-4 text-[11px] font-bold tracking-wide uppercase text-gray-600 border-b-2 border-transparent no-underline whitespace-nowrap">Ngày 4</a>
+    <a href="#d5" class="ntab shrink-0 px-3.5 py-4 text-[11px] font-bold tracking-wide uppercase text-gray-600 border-b-2 border-transparent no-underline whitespace-nowrap">Ngày 5</a>
+    <a href="#cost" class="ntab shrink-0 px-3.5 py-4 text-[11px] font-bold tracking-wide uppercase text-gray-600 border-b-2 border-transparent no-underline whitespace-nowrap">Chi phí</a>
   </div>
 </nav>
 
-<div class="day open" id="d0">
-  <div class="day-head" onclick="tog(this)">
-    <div class="day-date">Dem 7/4 — Rang sang 8/4</div>
-    <div class="day-name">Ha Noi &#8594; Ha Giang</div>
-    <div class="day-route">Xe cabin giuong nam &#183; <b>~300km</b></div>
-    <div class="day-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
-  </div>
-  <div class="day-body"><div class="day-inner"><div class="tl">
-    <div class="ti mv"><div class="ti-dot"></div><div class="ti-time">22:00</div><div class="ti-name">Len xe cabin giuong nam</div><div class="ti-desc">Noi Bai / Ha Noi &#8594; TP Ha Giang. Ngu tren xe qua dem.</div></div>
-    <div class="ti"><div class="ti-dot"></div><div class="ti-time">~03:00</div><div class="ti-name">Den TP Ha Giang</div><div class="ti-desc">Nghi ngoi tai quan cafe, cho troi sang.</div></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">06:00</div><div class="ti-name">Check-in Cot moc KM0</div><div class="ti-desc">Diem bat dau huyen thoai cua cung duong Hanh Phuc.</div><span class="tag tag-s">Check-in</span></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">07:00</div><div class="ti-name">An sang — Bun Vit Lang</div><div class="ti-desc">Bun vit dac san Ha Giang, nuoc dung dam da.</div><span class="tag tag-f">Am thuc</span></div>
-  </div></div></div>
-</div>
+<!-- ═══ MACRO: DAY TEMPLATE ═══ -->
 
-<div class="day" id="d1">
-  <div class="day-head" onclick="tog(this)">
-    <div class="day-date">Ngay 1 &#183; 8/4 (Thu Tu)</div>
-    <div class="day-name">Cao nguyen da Dong Van</div>
-    <div class="day-route">Ha Giang &#8594; Quan Ba &#8594; Dong Van &#183; <b>~160km</b></div>
-    <div class="day-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+<!-- Đêm 0 -->
+
+<div class="day open border-b border-gray-900" id="d0">
+  <div class="flex gap-4 items-start px-6 py-7 cursor-pointer" onclick="tog(this)">
+    <div class="shrink-0 w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-lg font-extrabold text-blue-400">☽</div>
+    <div class="flex-1 min-w-0">
+      <div class="text-[10px] font-bold tracking-widest uppercase text-neon mb-1">Đêm 7/4 → Rạng sáng 8/4</div>
+      <div class="text-lg font-bold text-white">Hà Nội → Hà Giang</div>
+      <div class="text-xs text-gray-400 mt-1">Xe cabin giường nằm <span class="inline-block px-2 py-0.5 bg-neon/10 rounded text-neon font-bold text-[11px] ml-1">~300km</span></div>
+    </div>
+    <svg class="chev shrink-0 w-4 h-4 text-gray-500 mt-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
-  <div class="day-body"><div class="day-inner"><div class="tl">
-    <div class="ti"><div class="ti-dot"></div><div class="ti-time">08:00</div><div class="ti-name">Doc Bac Sum</div><div class="ti-desc">Ngam may som, cung duong mo ra cao nguyen.</div><span class="tag tag-s">Canh dep</span></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">09:00</div><div class="ti-name">Nui Doi Quan Ba</div><div class="ti-desc">Bieu tuong Ha Giang — hai ngon nui can doi giua thung lung Tam Son.</div><span class="tag tag-s">Canh dep</span></div>
-    <div class="ti cu"><div class="ti-dot"></div><div class="ti-time">10:00</div><div class="ti-name">Lang det lanh Lung Tam</div><div class="ti-desc">Xem phu nu H'Mong det lanh truyen thong, tro chuyen voi nghe nhan.</div><span class="tag tag-c">Van hoa</span></div>
-    <div class="ti"><div class="ti-dot"></div><div class="ti-time">11:00</div><div class="ti-name">Cay nghien co don</div><div class="ti-desc">Cay co thu giua doi.</div></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">12:00</div><div class="ti-name">An trua quan dia phuong</div><div class="ti-desc">Thang co, men men, ruou ngo — am thuc vung cao nguyen ban.</div><span class="tag tag-f">Am thuc</span></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">13:00</div><div class="ti-name">Doc Tham Ma</div><div class="ti-desc">Con duong uon luon giua nui da — mot trong nhung cung deo dep nhat Viet Nam.</div><span class="tag tag-s">Canh dep</span></div>
-    <div class="ti"><div class="ti-dot"></div><div class="ti-time">14:00</div><div class="ti-name">Cafe view nui — Pho Cao</div><div class="ti-desc">Nghi chan giua may troi, ca phe pha phin giua bon be nui da.</div></div>
-    <div class="ti cu"><div class="ti-dot"></div><div class="ti-time">14:40</div><div class="ti-name">Lang co Lung Cam – Sung La</div><div class="ti-desc">Boi canh phim "Chuyen cua Pao". Nha trinh tuong reu phong.</div><span class="tag tag-c">Van hoa</span></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">15:30</div><div class="ti-name">Dinh Vua Meo (Nha Vuong)</div><div class="ti-desc">Dinh thu kien truc Trung Hoa–H'Mong, chung tich "vua" cai quan vung cao nguyen da.</div><span class="tag tag-c">Di tich</span></div>
-    <div class="ti sl"><div class="ti-dot"></div><div class="ti-time">17:30</div><div class="ti-name">Homestay Dong Van / Lo Lo Chai</div><div class="ti-desc">Nghi dem tai ban, tro chuyen voi gia dinh nguoi Lo Lo.</div><span class="tag tag-n">Nghi dem</span></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">Toi</div><div class="ti-name">An toi Dong Van</div><div class="ti-desc">Lap xuong gac bep, rau cai meo, ruou ngo nau chao.</div><span class="tag tag-f">Am thuc</span></div>
-  </div>
-  <div class="tip"><b>&#128161; LUU Y</b><p>Thue xe o to cung Duy cho ca cung. Ngay 1 co ~8 diem dung — moi noi khong nen qua 30 phut de kip lich.</p></div>
+  <div class="day-body"><div class="px-6 pb-8">
+    <div class="relative pl-6 border-l border-gray-800">
+      <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">22:00</div><div class="text-[15px] font-bold text-white mt-0.5">Lên xe cabin giường nằm</div><div class="text-[13px] text-gray-300 mt-0.5 leading-relaxed">Nội Bài / Hà Nội → TP Hà Giang. Ngủ trên xe qua đêm, tiết kiệm 1 đêm nghỉ.</div></div>
+      <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">~03:00</div><div class="text-[15px] font-bold text-white mt-0.5">Đến TP Hà Giang</div><div class="text-[13px] text-gray-300 mt-0.5 leading-relaxed">Nghỉ ngơi tại quán cà phê, chờ trời sáng.</div></div>
+      <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">06:00</div><div class="text-[15px] font-bold text-white mt-0.5">Check-in Cột mốc KM0</div><div class="text-[13px] text-gray-300 mt-0.5 leading-relaxed">Điểm bắt đầu huyền thoại của Cung đường Hạnh Phúc — con đường được đục xuyên núi đá bằng tay.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/15 text-neon border border-neon/25">★ Khởi hành</span></div>
+      <div class="relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">07:00</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn sáng — Bún Vịt Làng</div><div class="text-[13px] text-gray-300 mt-0.5 leading-relaxed">Bún vịt đặc sản Hà Giang, nước dùng đậm đà, thịt vịt mềm ngọt.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực</span></div>
+    </div>
   </div></div>
 </div>
 
-<div class="day" id="d2">
-  <div class="day-head" onclick="tog(this)">
-    <div class="day-date">Ngay 2 &#183; 9/4 (Thu Nam)</div>
-    <div class="day-name">Dong Van deep dive</div>
-    <div class="day-route">Dong Van &#8594; Meo Vac &#183; <b>~50km</b></div>
-    <div class="day-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+<!-- Ngày 1 -->
+
+<div class="day border-b border-gray-900" id="d1">
+  <div class="flex gap-4 items-start px-6 py-7 cursor-pointer" onclick="tog(this)">
+    <div class="shrink-0 w-12 h-12 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center text-lg font-extrabold text-neon">01</div>
+    <div class="flex-1 min-w-0">
+      <div class="text-[10px] font-bold tracking-widest uppercase text-neon mb-1">Ngày 1 · Thứ Tư, 8/4</div>
+      <div class="text-lg font-bold text-white">Cao nguyên đá Đồng Văn</div>
+      <div class="text-xs text-gray-400 mt-1">Hà Giang → Quản Bạ → Đồng Văn <span class="inline-block px-2 py-0.5 bg-neon/10 rounded text-neon font-bold text-[11px] ml-1">~160km</span></div>
+    </div>
+    <svg class="chev shrink-0 w-4 h-4 text-gray-500 mt-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
-  <div class="day-body"><div class="day-inner"><div class="tl">
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">06:00</div><div class="ti-name">An sang</div><div class="ti-desc">Pho chua Dong Van — dac san chi co o vung nay.</div><span class="tag tag-f">Am thuc</span></div>
-    <div class="ti cu"><div class="ti-dot"></div><div class="ti-time">Sang</div><div class="ti-name">Lang cham bac Lao Xa</div><div class="ti-desc">Nghe nhan H'Mong cham bac thu cong — tu thoi bac den trang suc tinh xao.</div><span class="tag tag-c">Lang nghe</span></div>
-    <div class="ti cu"><div class="ti-dot"></div><div class="ti-time">Sang</div><div class="ti-name">Lang co Thien Huong</div><div class="ti-desc">Ban lang trinh tuong co kinh, binh yen giua thung lung da.</div><span class="tag tag-c">Van hoa</span></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">Trua</div><div class="ti-name">An trua Dong Van</div><div class="ti-desc">Thit trau gac bep, chao au tau, rau rung.</div><span class="tag tag-f">Am thuc</span></div>
-    <div class="ti cu"><div class="ti-dot"></div><div class="ti-time">Chieu</div><div class="ti-name">Kham pha ban lang cao nguyen da</div><div class="ti-desc">Di bo lang thang qua cac ban, giao luu voi nguoi Mong, Lo Lo.</div><span class="tag tag-c">Trai nghiem</span></div>
-    <div class="ti sl"><div class="ti-dot"></div><div class="ti-time">Toi</div><div class="ti-name">Nghi dem Meo Vac</div><div class="ti-desc">Homestay hoac nha nghi trung tam thi tran.</div><span class="tag tag-n">Nghi dem</span></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">Toi</div><div class="ti-name">An toi Meo Vac</div><div class="ti-desc">Ga den, lau thang co bo, ruou men men.</div><span class="tag tag-f">Am thuc</span></div>
-  </div>
-  <div class="tip"><b>&#128161; NGAY THONG THA</b><p>Ngay 2 it di chuyen, tap trung trai nghiem lang nghe va ban dia. Nghi som de lay suc cho ngay 3 dai.</p></div>
+  <div class="day-body"><div class="px-6 pb-8">
+    <div class="relative pl-6 border-l border-gray-800">
+      <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">08:00</div><div class="text-[15px] font-bold text-white mt-0.5">Dốc Bắc Sum</div><div class="text-[13px] text-gray-300 mt-0.5">Cổng trời mở ra cao nguyên đá. Ngắm mây sớm vờn quanh vách núi.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/10 text-neon">Cảnh đẹp</span></div>
+      <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">09:00</div><div class="text-[15px] font-bold text-white mt-0.5">Núi Đôi Quản Bạ</div><div class="text-[13px] text-gray-300 mt-0.5">Biểu tượng Hà Giang — hai ngọn núi cân đối hoàn hảo giữa thung lũng Tam Sơn xanh mướt.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/10 text-neon">Cảnh đẹp</span></div>
+      <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-cyan-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">10:00</div><div class="text-[15px] font-bold text-white mt-0.5">Làng dệt lanh Lùng Tám</div><div class="text-[13px] text-gray-300 mt-0.5">Phụ nữ H'Mông dệt lanh truyền thống. Trò chuyện với nghệ nhân, tìm hiểu quy trình thủ công.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Văn hoá bản địa</span></div>
+      <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">11:00</div><div class="text-[15px] font-bold text-white mt-0.5">Cây nghiến cô đơn</div><div class="text-[13px] text-gray-300 mt-0.5">Cây cổ thụ đứng một mình giữa đồi — biểu tượng sức sống giữa cao nguyên đá.</div></div>
+      <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">12:00</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn trưa quán bản địa</div><div class="text-[13px] text-gray-300 mt-0.5">Thắng cố nóng hổi, mèn mén ngô, rượu ngô — ẩm thực nguyên bản vùng cao.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực vùng cao</span></div>
+      <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">13:00</div><div class="text-[15px] font-bold text-white mt-0.5">Dốc Thẩm Mã</div><div class="text-[13px] text-gray-300 mt-0.5">Con đường uốn lượn tựa dải lụa giữa núi đá — một trong những cung đèo đẹp nhất Việt Nam.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/15 text-neon border border-neon/25">★ Highlight</span></div>
+      <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">14:00</div><div class="text-[15px] font-bold text-white mt-0.5">Cà phê view núi — Phố Cáo</div><div class="text-[13px] text-gray-300 mt-0.5">Nghỉ chân giữa mây trời. Cà phê pha phin nhìn ra bốn bề núi đá tai mèo.</div></div>
+      <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-cyan-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">14:40</div><div class="text-[15px] font-bold text-white mt-0.5">Làng cổ Lũng Cẩm – Sủng Là</div><div class="text-[13px] text-gray-300 mt-0.5">Bối cảnh phim "Chuyện của Pao". Nhà trình tường rêu phong, vườn đào, cánh đồng hoa cải vàng.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Văn hoá</span></div>
+      <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">15:30</div><div class="text-[15px] font-bold text-white mt-0.5">Dinh Vua Mèo (Nhà Vương)</div><div class="text-[13px] text-gray-300 mt-0.5">Dinh thự kiến trúc Trung Hoa – H'Mông. Chứng tích của "vua" cai quản vùng cao nguyên đá.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Di tích lịch sử</span></div>
+      <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-pink-500" style="box-shadow:0 0 8px rgba(236,72,153,0.3)"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">17:30</div><div class="text-[15px] font-bold text-white mt-0.5">Nghỉ đêm Đồng Văn / Lô Lô Chải</div><div class="text-[13px] text-gray-300 mt-0.5">Homestay bản làng. Trò chuyện với gia đình người Lô Lô, ngắm hoàng hôn trên cao nguyên.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-pink-500/10 text-pink-400">Nghỉ đêm homestay</span></div>
+      <div class="relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Tối</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn tối Đồng Văn</div><div class="text-[13px] text-gray-300 mt-0.5">Lạp xưởng gác bếp, rau cải mèo xào tỏi, rượu ngô nấu chảo — bữa cơm vùng cao đúng điệu.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực</span></div>
+    </div>
+    <div class="mt-6 p-4 rounded-xl bg-neon/5 border border-neon/10"><div class="text-[9px] font-bold tracking-widest uppercase text-neon mb-1">💡 Lưu ý ngày 1</div><p class="text-[13px] text-gray-300 leading-relaxed">Thuê xe ô tô cùng Duy cho cả cung. Ngày 1 có ~8 điểm dừng — mỗi nơi tối đa 30 phút. Mang áo ấm vì chiều tối trên cao nguyên khá lạnh.</p></div>
   </div></div>
 </div>
 
-<div class="day" id="d3">
-  <div class="day-head" onclick="tog(this)">
-    <div class="day-date">Ngay 3 &#183; 10/4 (Thu Sau)</div>
-    <div class="day-name">Hem Tu San &amp; Ban Lo Lo Den</div>
-    <div class="day-route">Meo Vac &#8594; Bao Lac &#183; <b>~150km &#183; 5h lai</b></div>
-    <div class="day-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+<!-- Ngày 2 -->
+
+<div class="day border-b border-gray-900" id="d2">
+  <div class="flex gap-4 items-start px-6 py-7 cursor-pointer" onclick="tog(this)">
+    <div class="shrink-0 w-12 h-12 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center text-lg font-extrabold text-neon">02</div>
+    <div class="flex-1 min-w-0">
+      <div class="text-[10px] font-bold tracking-widest uppercase text-neon mb-1">Ngày 2 · Thứ Năm, 9/4</div>
+      <div class="text-lg font-bold text-white">Đồng Văn — Khám phá sâu</div>
+      <div class="text-xs text-gray-400 mt-1">Đồng Văn → Mèo Vạc <span class="inline-block px-2 py-0.5 bg-neon/10 rounded text-neon font-bold text-[11px] ml-1">~50km</span></div>
+    </div>
+    <svg class="chev shrink-0 w-4 h-4 text-gray-500 mt-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
-  <div class="day-body"><div class="day-inner"><div class="tl">
-    <div class="ti"><div class="ti-dot"></div><div class="ti-time">06:30</div><div class="ti-name">Cafe Panorama / Mi Po</div><div class="ti-desc">View song Nho Que tu tren cao — binh minh tren hem vuc.</div><span class="tag tag-s">Canh dep</span></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">07:30</div><div class="ti-name">Di thuyen Hem Tu San</div><div class="ti-desc">Hem vuc sau nhat Dong Nam A. Song Nho Que xanh ngoc bich luon qua vach da dung dung.</div><span class="tag tag-s">HIGHLIGHT</span></div>
-    <div class="ti mv"><div class="ti-dot"></div><div class="ti-time">10:00</div><div class="ti-name">Xuat phat &#8594; Bao Lam</div><div class="ti-desc">Meo Vac &#8594; nga ba QL34 (55km, QL4C). Cung duong nhua dep, vang xe.</div></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">12:00</div><div class="ti-name">An trua Bao Lam</div><div class="ti-desc">Thang co, pho chua, khau nhuc — phien ban Cao Bang.</div><span class="tag tag-f">Am thuc</span></div>
-    <div class="ti mv"><div class="ti-dot"></div><div class="ti-time">13:30</div><div class="ti-name">Bao Lam &#8594; Bao Lac</div><div class="ti-desc">QL34 qua rung truc xanh ngut ngan, ban lang Dao, San Chi.</div></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">16:00</div><div class="ti-name">Ban Khuoi Khon — Nguoi Lo Lo Den</div><div class="ti-desc">Homestay cong dong duy nhat cua dan toc Lo Lo Den tai xa Kim Cuc. Trai nghiem van hoa, trang phuc, nhac cu truyen thong.</div><span class="tag tag-c">HIGHLIGHT TRAI NGHIEM</span></div>
-    <div class="ti sl"><div class="ti-dot"></div><div class="ti-time">Toi</div><div class="ti-name">Nghi dem Homestay Lo Lo Den</div><div class="ti-desc">An toi cung gia dinh: thit lon treo gac bep, xoi ngu sac, ca song Gam, ruou ngo.</div><span class="tag tag-n">Nghi dem</span></div>
+  <div class="day-body"><div class="px-6 pb-8"><div class="relative pl-6 border-l border-gray-800">
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">06:00</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn sáng</div><div class="text-[13px] text-gray-300 mt-0.5">Phở chua Đồng Văn — đặc sản độc nhất chỉ có ở vùng này.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực đặc sản</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-cyan-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Sáng</div><div class="text-[15px] font-bold text-white mt-0.5">Làng chạm bạc Lao Xa</div><div class="text-[13px] text-gray-300 mt-0.5">Nghệ nhân H'Mông chạm bạc thủ công — từ thỏi bạc thô đến trang sức tinh xảo.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Làng nghề</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-cyan-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Sáng</div><div class="text-[15px] font-bold text-white mt-0.5">Làng cổ Thiên Hương</div><div class="text-[13px] text-gray-300 mt-0.5">Bản làng trình tường cổ kính, bình yên giữa thung lũng đá.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Văn hoá</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Trưa</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn trưa Đồng Văn</div><div class="text-[13px] text-gray-300 mt-0.5">Thịt trâu gác bếp, cháo ấu tẩu (vị đắng đặc trưng), rau rừng xào.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-cyan-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Chiều</div><div class="text-[15px] font-bold text-white mt-0.5">Lang thang bản làng cao nguyên đá</div><div class="text-[13px] text-gray-300 mt-0.5">Đi bộ qua các bản, giao lưu với đồng bào Mông, Lô Lô.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Trải nghiệm</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-pink-500" style="box-shadow:0 0 8px rgba(236,72,153,0.3)"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Tối</div><div class="text-[15px] font-bold text-white mt-0.5">Nghỉ đêm Mèo Vạc</div><div class="text-[13px] text-gray-300 mt-0.5">Homestay hoặc nhà nghỉ trung tâm thị trấn Mèo Vạc.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-pink-500/10 text-pink-400">Nghỉ đêm</span></div>
+    <div class="relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Tối</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn tối Mèo Vạc</div><div class="text-[13px] text-gray-300 mt-0.5">Gà đen H'Mông, lẩu thắng cố bò, rượu mèn mén ủ lâu ngày.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực</span></div>
   </div>
-  <div class="tip"><b>&#9968; CUNG DUONG</b><p>Doan Meo Vac &#8594; Bao Lam duong tot, sedan di duoc. Lien he truoc ban Khuoi Khon de book homestay.</p></div>
+  <div class="mt-6 p-4 rounded-xl bg-neon/5 border border-neon/10"><div class="text-[9px] font-bold tracking-widest uppercase text-neon mb-1">💡 Ngày thong thả</div><p class="text-[13px] text-gray-300 leading-relaxed">Ít di chuyển, tập trung trải nghiệm làng nghề và bản địa. Nghỉ sớm để lấy sức cho ngày 3 — ngày dài nhất hành trình.</p></div>
   </div></div>
 </div>
 
-<div class="day" id="d4">
-  <div class="day-head" onclick="tog(this)">
-    <div class="day-date">Ngay 4 &#183; 11/4 (Thu Bay)</div>
-    <div class="day-name">Deo 14 tang, Pac Bo &amp; Thac Ban Gioc</div>
-    <div class="day-route">Bao Lac &#8594; Pac Bo &#8594; Trung Khanh &#183; <b>~220km</b></div>
-    <div class="day-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+<!-- Ngày 3 -->
+
+<div class="day border-b border-gray-900" id="d3">
+  <div class="flex gap-4 items-start px-6 py-7 cursor-pointer" onclick="tog(this)">
+    <div class="shrink-0 w-12 h-12 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center text-lg font-extrabold text-neon">03</div>
+    <div class="flex-1 min-w-0">
+      <div class="text-[10px] font-bold tracking-widest uppercase text-neon mb-1">Ngày 3 · Thứ Sáu, 10/4</div>
+      <div class="text-lg font-bold text-white">Hẻm Tu Sản &amp; Bản Lô Lô Đen</div>
+      <div class="text-xs text-gray-400 mt-1">Mèo Vạc → Bảo Lạc <span class="inline-block px-2 py-0.5 bg-neon/10 rounded text-neon font-bold text-[11px] ml-1">~150km · 5h</span></div>
+    </div>
+    <svg class="chev shrink-0 w-4 h-4 text-gray-500 mt-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
-  <div class="day-body"><div class="day-inner"><div class="tl">
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">06:30</div><div class="ti-name">An sang, chia tay ban Khuoi Khon</div><div class="ti-desc">Xoi nep nuong, trung ga ban.</div></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">07:30</div><div class="ti-name">Deo Me Pia — 14 tang</div><div class="ti-desc">Bao Lac &#8594; Xuan Truong (QL4A). Deo doc da hiem tro, uon 14 tang — leo 30 phut len viewpoint.</div><span class="tag tag-s">HIGHLIGHT</span></div>
-    <div class="ti mv"><div class="ti-dot"></div><div class="ti-time">09:00</div><div class="ti-name">Thong Nong &#8594; Ha Quang</div><div class="ti-desc">Tiep tuc QL4A ve phia dong. Duong tren cung, khong quay lai.</div></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">09:30</div><div class="ti-name">Suoi Le Nin — Hang Pac Bo</div><div class="ti-desc">Di tich cach mang: noi Bac Ho song va hoat dong khi moi ve nuoc 1941.</div><span class="tag tag-c">Di tich lich su</span></div>
-    <div class="ti mv"><div class="ti-dot"></div><div class="ti-time">11:00</div><div class="ti-name">Ha Quang &#8594; TP Cao Bang</div><div class="ti-desc">~46km, 1 tieng.</div></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">12:00</div><div class="ti-name">An trua TP Cao Bang</div><div class="ti-desc">Banh cuon Cao Bang (nhan trung kien!), pho chua, vit quay 7 vi.</div><span class="tag tag-f">Am thuc dac san</span></div>
-    <div class="ti mv"><div class="ti-dot"></div><div class="ti-time">13:30</div><div class="ti-name">TP Cao Bang &#8594; Trung Khanh</div><div class="ti-desc">~67km, 1.5h. Qua deo Ma Phuc (deo 7 tang).</div></div>
-    <div class="ti hl"><div class="ti-dot"></div><div class="ti-time">15:00</div><div class="ti-name">Thac Ban Gioc</div><div class="ti-desc">Thac nuoc tu nhien lon nhat DNA, bien gioi Viet-Trung. Thang 4 nuoc xanh trong.</div><span class="tag tag-s">HIGHLIGHT</span></div>
-    <div class="ti"><div class="ti-dot"></div><div class="ti-time">16:00</div><div class="ti-name">Dong Nguom Ngao + Nui Thung</div><div class="ti-desc">Hang dong thach nhu 2km. "Nguom Ngao" = Hang Ho (tieng Tay).</div><span class="tag tag-s">Canh dep</span></div>
-    <div class="ti sl"><div class="ti-dot"></div><div class="ti-time">17:30</div><div class="ti-name">Homestay Lang da Khuoi Ky</div><div class="ti-desc">14 ngoi nha san da 400 nam tuoi cua nguoi Tay.</div><span class="tag tag-n">Nghi dem</span></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">Toi</div><div class="ti-name">An toi Khuoi Ky / Trung Khanh</div><div class="ti-desc">Hat de Trung Khanh nuong, ca suoi nau mang, lon quay la mac mat.</div><span class="tag tag-f">Am thuc dac san</span></div>
+  <div class="day-body"><div class="px-6 pb-8"><div class="relative pl-6 border-l border-gray-800">
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">06:30</div><div class="text-[15px] font-bold text-white mt-0.5">Cà phê Panorama / Mí Pó</div><div class="text-[13px] text-gray-300 mt-0.5">Bình minh trên hẻm vực sông Nho Quế nhìn từ trên cao. View triệu đô.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/10 text-neon">Cảnh đẹp</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">07:30</div><div class="text-[15px] font-bold text-white mt-0.5">Đi thuyền Hẻm Tu Sản</div><div class="text-[13px] text-gray-300 mt-0.5">Hẻm vực sâu nhất Đông Nam Á. Sông Nho Quế xanh ngọc bích luồn qua vách đá dựng đứng hàng trăm mét.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/15 text-neon border border-neon/25">★ Highlight hành trình</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">10:00</div><div class="text-[15px] font-bold text-white mt-0.5">Xuất phát → Bảo Lâm</div><div class="text-[13px] text-gray-300 mt-0.5">Mèo Vạc → ngã ba QL34 (55km, QL4C). Cung đường nhựa đẹp, vắng xe.</div></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">12:00</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn trưa Bảo Lâm</div><div class="text-[13px] text-gray-300 mt-0.5">Thắng cố, phở chua, khâu nhục — phiên bản Cao Bằng đậm đà hơn.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">13:30</div><div class="text-[15px] font-bold text-white mt-0.5">Bảo Lâm → Bảo Lạc</div><div class="text-[13px] text-gray-300 mt-0.5">QL34 xuyên rừng trúc xanh ngút ngàn, qua bản làng Dao, Sán Chỉ ven đường.</div></div>
+    <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">16:00</div><div class="text-[15px] font-bold text-white mt-0.5">Bản Khuổi Khon — Người Lô Lô Đen</div><div class="text-[13px] text-gray-300 mt-0.5">Homestay cộng đồng duy nhất của dân tộc Lô Lô Đen tại xã Kim Cúc. Trải nghiệm văn hoá, mặc thử trang phục, nghe nhạc cụ truyền thống.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/15 text-neon border border-neon/25">★ Highlight trải nghiệm</span></div>
+    <div class="relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-pink-500" style="box-shadow:0 0 8px rgba(236,72,153,0.3)"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Tối</div><div class="text-[15px] font-bold text-white mt-0.5">Nghỉ đêm Homestay Lô Lô Đen</div><div class="text-[13px] text-gray-300 mt-0.5">Ăn tối cùng gia đình bản: thịt lợn gác bếp, xôi ngũ sắc, cá sông Gâm nướng, rượu ngô.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-pink-500/10 text-pink-400">Nghỉ đêm homestay</span></div>
   </div>
-  <div class="tip"><b>&#128273; CUNG DUONG TOI UU</b><p>Bao Lac &#8594; Deo Me Pia &#8594; Thong Nong &#8594; Pac Bo &#8594; TP CB &#8594; Trung Khanh — tat ca tren duong, KHONG quay lai. Tiet kiem ~3h so voi lich goc.</p></div>
+  <div class="mt-6 p-4 rounded-xl bg-neon/5 border border-neon/10"><div class="text-[9px] font-bold tracking-widest uppercase text-neon mb-1">⛰️ Cung đường</div><p class="text-[13px] text-gray-300 leading-relaxed"><strong class="text-white">Liên hệ trước bản Khuổi Khon</strong> để đặt homestay. Đoạn Mèo Vạc → Bảo Lâm đường tốt, sedan đi thoải mái.</p></div>
   </div></div>
 </div>
 
-<div class="day" id="d5">
-  <div class="day-head" onclick="tog(this)">
-    <div class="day-date">Ngay 5 &#183; 12/4 (Chu Nhat)</div>
-    <div class="day-name">Thach An &#8594; Lang Son &#8594; Bay ve</div>
-    <div class="day-route">Trung Khanh &#8594; Lang Son &#8594; Noi Bai &#183; <b>~250km</b></div>
-    <div class="day-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+<!-- Ngày 4 -->
+
+<div class="day border-b border-gray-900" id="d4">
+  <div class="flex gap-4 items-start px-6 py-7 cursor-pointer" onclick="tog(this)">
+    <div class="shrink-0 w-12 h-12 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center text-lg font-extrabold text-neon">04</div>
+    <div class="flex-1 min-w-0">
+      <div class="text-[10px] font-bold tracking-widest uppercase text-neon mb-1">Ngày 4 · Thứ Bảy, 11/4</div>
+      <div class="text-lg font-bold text-white">Đèo 14 tầng, Pác Bó &amp; Thác Bản Giốc</div>
+      <div class="text-xs text-gray-400 mt-1">Bảo Lạc → Pác Bó → Trùng Khánh <span class="inline-block px-2 py-0.5 bg-neon/10 rounded text-neon font-bold text-[11px] ml-1">~220km</span></div>
+    </div>
+    <svg class="chev shrink-0 w-4 h-4 text-gray-500 mt-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
-  <div class="day-body"><div class="day-inner"><div class="tl">
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">07:00</div><div class="ti-name">An sang Trung Khanh</div><div class="ti-desc">Pho vit quay, banh cuon trung.</div></div>
-    <div class="ti cu"><div class="ti-dot"></div><div class="ti-time">08:00</div><div class="ti-name">Thach An — Lang lam thach den</div><div class="ti-desc">Xem dan lang che bien thach den truyen thong tu la cay.</div><span class="tag tag-c">Lang nghe</span></div>
-    <div class="ti mv"><div class="ti-dot"></div><div class="ti-time">10:00</div><div class="ti-name">Thach An &#8594; Lang Son</div><div class="ti-desc">~90km, 2 tieng. Duong QL4A/4B.</div></div>
-    <div class="ti fd"><div class="ti-dot"></div><div class="ti-time">12:00</div><div class="ti-name">An trua Lang Son</div><div class="ti-desc">Pho vit quay Lang Son, khau nhuc, banh ap chao.</div><span class="tag tag-f">Am thuc</span></div>
-    <div class="ti"><div class="ti-dot"></div><div class="ti-time">Chieu</div><div class="ti-name">Mau Son / Lang Da (neu kip)</div><div class="ti-desc">Tuy gio bay, co the ghe nhanh.</div></div>
-    <div class="ti mv"><div class="ti-dot"></div><div class="ti-time">Toi</div><div class="ti-name">Duy cho ra san bay Noi Bai</div><div class="ti-desc">Lang Son &#8594; Noi Bai ~160km, cao toc ~2.5h. Ket thuc hanh trinh!</div></div>
+  <div class="day-body"><div class="px-6 pb-8"><div class="relative pl-6 border-l border-gray-800">
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">06:30</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn sáng, chia tay bản Khuổi Khon</div><div class="text-[13px] text-gray-300 mt-0.5">Xôi nếp nương, trứng gà bản, trà nóng buổi sớm.</div></div>
+    <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">07:30</div><div class="text-[15px] font-bold text-white mt-0.5">Đèo Mẻ Pia — 14 tầng</div><div class="text-[13px] text-gray-300 mt-0.5">Bảo Lạc → Xuân Trường (QL4A). Đèo dốc đá hiểm trở uốn 14 tầng. Leo bộ 30 phút lên viewpoint chụp toàn cảnh.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/15 text-neon border border-neon/25">★ Highlight</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">09:00</div><div class="text-[15px] font-bold text-white mt-0.5">Thông Nông → Hà Quảng</div><div class="text-[13px] text-gray-300 mt-0.5">Tiếp tục QL4A về phía đông. Đường đi thẳng trên cung, không cần quay lại.</div></div>
+    <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">09:30</div><div class="text-[15px] font-bold text-white mt-0.5">Suối Lê Nin — Hang Pác Bó</div><div class="text-[13px] text-gray-300 mt-0.5">Di tích cách mạng: nơi Bác Hồ sống và hoạt động khi mới về nước năm 1941. Suối Lê Nin, Núi Các Mác, hang Cốc Bó.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Di tích lịch sử</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">11:00</div><div class="text-[15px] font-bold text-white mt-0.5">Hà Quảng → TP Cao Bằng</div><div class="text-[13px] text-gray-300 mt-0.5">~46km, khoảng 1 tiếng.</div></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">12:00</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn trưa TP Cao Bằng</div><div class="text-[13px] text-gray-300 mt-0.5">Bánh cuốn nhân trứng kiến (đặc sản tháng 4!), phở chua, vịt quay 7 vị — bữa trưa đáng nhớ nhất.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực ★</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">13:30</div><div class="text-[15px] font-bold text-white mt-0.5">TP Cao Bằng → Trùng Khánh</div><div class="text-[13px] text-gray-300 mt-0.5">~67km, 1.5h. Qua đèo Mã Phục (đèo 7 tầng) — cảnh đẹp ấn tượng.</div></div>
+    <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-neon neon-dot"></div><div class="text-[10px] font-bold tracking-wider text-neon uppercase">15:00</div><div class="text-[15px] font-bold text-white mt-0.5">Thác Bản Giốc</div><div class="text-[13px] text-gray-300 mt-0.5">Thác nước tự nhiên lớn nhất Đông Nam Á, ngay biên giới Việt – Trung. Tháng 4 nước trong xanh, thác đổ dịu dàng.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/15 text-neon border border-neon/25">★ Highlight</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">16:00</div><div class="text-[15px] font-bold text-white mt-0.5">Động Ngườm Ngao + Núi Thủng</div><div class="text-[13px] text-gray-300 mt-0.5">Hang động thạch nhũ dài 2km. "Ngườm Ngao" nghĩa là Hang Hổ trong tiếng Tày.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-neon/10 text-neon">Cảnh đẹp</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[27px] top-1 w-3 h-3 rounded-full bg-pink-500" style="box-shadow:0 0 8px rgba(236,72,153,0.3)"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">17:30</div><div class="text-[15px] font-bold text-white mt-0.5">Homestay Làng đá Khuổi Ky</div><div class="text-[13px] text-gray-300 mt-0.5">14 ngôi nhà sàn đá hơn 400 năm tuổi của người Tày. Đêm yên tĩnh, nghe suối chảy, ngắm trời sao.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-pink-500/10 text-pink-400">Nghỉ đêm homestay</span></div>
+    <div class="relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Tối</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn tối Khuổi Ky / Trùng Khánh</div><div class="text-[13px] text-gray-300 mt-0.5">Hạt dẻ Trùng Khánh nướng, cá suối nấu măng chua, lợn quay lá mắc mật, bánh khảo.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực đặc sản</span></div>
   </div>
-  <div class="tip"><b>&#9992; LUU Y BAY</b><p>Book ve bay toi muon (21h+) de co du thoi gian.</p></div>
+  <div class="mt-6 p-4 rounded-xl bg-neon/5 border border-neon/10"><div class="text-[9px] font-bold tracking-widest uppercase text-neon mb-1">🔑 Cung đường tối ưu</div><p class="text-[13px] text-gray-300 leading-relaxed">Bảo Lạc → Đèo Mẻ Pia → Thông Nông → Pác Bó → TP CB → Trùng Khánh — <strong class="text-white">tất cả nằm trên đường, KHÔNG quay lại</strong>. Tiết kiệm ~3 tiếng so với lịch gốc.</p></div>
   </div></div>
 </div>
 
-<div class="budget" id="cost">
-  <h2>Chi phi du kien <em>/nguoi</em></h2>
-  <div class="bg">
-    <div class="br"><span>Xe cabin HN&#8594;HG</span><span>700K</span></div>
-    <div class="br"><span>Homestay 4 dem</span><span>2.400K</span></div>
-    <div class="br"><span>An uong (~5 ngay)</span><span>2.500K</span></div>
-    <div class="br"><span>Ve tham quan</span><span>500K</span></div>
-    <div class="br"><span>Thuyen Tu San</span><span>300K</span></div>
-    <div class="br"><span>Cafe &amp; linh tinh</span><span>500K</span></div>
-    <div class="br"><span>Xe (chia 3 voi Duy)</span><span>1.500K</span></div>
-    <div class="br tot"><span>TONG UOC TINH</span><span>~8.400K</span></div>
+<!-- Ngày 5 -->
+
+<div class="day border-b border-gray-900" id="d5">
+  <div class="flex gap-4 items-start px-6 py-7 cursor-pointer" onclick="tog(this)">
+    <div class="shrink-0 w-12 h-12 rounded-xl bg-neon/10 border border-neon/20 flex items-center justify-center text-lg font-extrabold text-neon">05</div>
+    <div class="flex-1 min-w-0">
+      <div class="text-[10px] font-bold tracking-widest uppercase text-neon mb-1">Ngày 5 · Chủ Nhật, 12/4</div>
+      <div class="text-lg font-bold text-white">Thạch An → Lạng Sơn → Bay về</div>
+      <div class="text-xs text-gray-400 mt-1">Trùng Khánh → Lạng Sơn → Nội Bài <span class="inline-block px-2 py-0.5 bg-neon/10 rounded text-neon font-bold text-[11px] ml-1">~250km</span></div>
+    </div>
+    <svg class="chev shrink-0 w-4 h-4 text-gray-500 mt-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
-  <small>* Chi phi xe tinh chia 3 nguoi (tong 4.500K/5 ngay). Chua gom ve may bay ve HCM. Mang du tien mat.</small>
+  <div class="day-body"><div class="px-6 pb-8"><div class="relative pl-6 border-l border-gray-800">
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">07:00</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn sáng Trùng Khánh</div><div class="text-[13px] text-gray-300 mt-0.5">Phở vịt quay Trùng Khánh, bánh cuốn trứng nóng hổi.</div></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-cyan-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">08:00</div><div class="text-[15px] font-bold text-white mt-0.5">Thạch An — Làng làm thạch đen</div><div class="text-[13px] text-gray-300 mt-0.5">Xem dân làng chế biến thạch đen truyền thống từ lá cây — đặc sản nổi tiếng Cao Bằng.</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Làng nghề</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">10:00</div><div class="text-[15px] font-bold text-white mt-0.5">Thạch An → Lạng Sơn</div><div class="text-[13px] text-gray-300 mt-0.5">~90km, khoảng 2 tiếng. Đường QL4A/4B xuyên vùng núi đá vôi.</div></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full border-2 border-orange-400 bg-black"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">12:00</div><div class="text-[15px] font-bold text-white mt-0.5">Ăn trưa Lạng Sơn</div><div class="text-[13px] text-gray-300 mt-0.5">Phở vịt quay Lạng Sơn, khâu nhục mềm tan, bánh áp chao giòn rụm. Bữa cuối trước khi về!</div><span class="inline-block mt-2 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-md bg-orange-500/10 text-orange-400">Ẩm thực Lạng Sơn</span></div>
+    <div class="mb-7 relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Chiều</div><div class="text-[15px] font-bold text-white mt-0.5">Mẫu Sơn / Làng Đá (nếu kịp)</div><div class="text-[13px] text-gray-300 mt-0.5">Tùy giờ bay, có thể ghé nhanh ngắm cảnh Mẫu Sơn.</div></div>
+    <div class="relative"><div class="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full bg-gray-700"></div><div class="text-[10px] font-bold tracking-wider text-neon-dark uppercase">Tối</div><div class="text-[15px] font-bold text-white mt-0.5">Duy chở ra sân bay Nội Bài</div><div class="text-[13px] text-gray-300 mt-0.5">Lạng Sơn → Nội Bài ~160km, đường cao tốc ~2.5 tiếng. Kết thúc hành trình Đông Bắc!</div></div>
+  </div>
+  <div class="mt-6 p-4 rounded-xl bg-neon/5 border border-neon/10"><div class="text-[9px] font-bold tracking-widest uppercase text-neon mb-1">✈️ Lưu ý chuyến bay</div><p class="text-[13px] text-gray-300 leading-relaxed">Nên đặt vé bay tối muộn (từ 21h trở đi) để có đủ thời gian thong thả.</p></div>
+  </div></div>
 </div>
 
-<div class="pack">
-  <h2>Mang theo</h2>
-  <div class="pack-grid">
-    <div class="pack-item">&#129509; Ao gio / ao am</div>
-    <div class="pack-item">&#127783; Ao mua mong</div>
-    <div class="pack-item">&#128095; Giay leo nui</div>
-    <div class="pack-item">&#128138; Thuoc say xe</div>
-    <div class="pack-item">&#128176; Tien mat du</div>
-    <div class="pack-item">&#128267; Pin sac du phong</div>
-    <div class="pack-item">&#129524; Kem chong nang</div>
-    <div class="pack-item">&#128241; Offline map</div>
+<!-- ═══ CHI PHÍ ═══ -->
+
+<div class="px-6 py-10" id="cost">
+  <div class="text-[10px] font-bold tracking-[3px] uppercase text-neon-dark mb-2">Ngân sách</div>
+  <h2 class="text-2xl font-extrabold text-white mb-6">Chi phí dự kiến <span class="text-gray-500 font-light text-base">/ người</span></h2>
+  <div class="rounded-2xl overflow-hidden border border-gray-900">
+    <div class="flex justify-between items-center px-5 py-4 text-[13px] text-gray-300 border-b border-gray-900/50"><span>🚌 Xe cabin Hà Nội → Hà Giang</span><span class="text-neon font-bold text-sm">700K</span></div>
+    <div class="flex justify-between items-center px-5 py-4 text-[13px] text-gray-300 border-b border-gray-900/50"><span>🏠 Homestay 4 đêm</span><span class="text-neon font-bold text-sm">2.400K</span></div>
+    <div class="flex justify-between items-center px-5 py-4 text-[13px] text-gray-300 border-b border-gray-900/50"><span>🍜 Ăn uống (~5 ngày)</span><span class="text-neon font-bold text-sm">2.500K</span></div>
+    <div class="flex justify-between items-center px-5 py-4 text-[13px] text-gray-300 border-b border-gray-900/50"><span>🎫 Vé tham quan</span><span class="text-neon font-bold text-sm">500K</span></div>
+    <div class="flex justify-between items-center px-5 py-4 text-[13px] text-gray-300 border-b border-gray-900/50"><span>🛶 Thuyền Hẻm Tu Sản</span><span class="text-neon font-bold text-sm">300K</span></div>
+    <div class="flex justify-between items-center px-5 py-4 text-[13px] text-gray-300 border-b border-gray-900/50"><span>☕ Cà phê &amp; linh tinh</span><span class="text-neon font-bold text-sm">500K</span></div>
+    <div class="flex justify-between items-center px-5 py-4 text-[13px] text-gray-300 border-b border-gray-900/50"><span>🚗 Xe ô tô (chia 3 với Duy)</span><span class="text-neon font-bold text-sm">1.500K</span></div>
+    <div class="flex justify-between items-center px-5 py-4 bg-neon/5"><span class="text-white font-bold text-sm">Tổng ước tính</span><span class="text-neon font-extrabold text-xl neon-glow">~8.400K</span></div>
+  </div>
+  <p class="mt-4 text-xs text-gray-500 leading-relaxed">* Chi phí xe tính chia 3 người (tổng 4.500K/5 ngày). Chưa gồm vé máy bay về HCM. Mang đủ tiền mặt — vùng cao ít ATM.</p>
+</div>
+
+<!-- ═══ MANG THEO ═══ -->
+
+<div class="px-6 pb-12">
+  <div class="text-[10px] font-bold tracking-[3px] uppercase text-neon-dark mb-2">Chuẩn bị</div>
+  <h2 class="text-2xl font-extrabold text-white mb-5">Đồ mang theo</h2>
+  <div class="grid grid-cols-2 gap-2">
+    <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-gray-950 border border-gray-900 text-[13px] text-gray-300 font-medium">🧥 Áo gió / áo ấm</div>
+    <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-gray-950 border border-gray-900 text-[13px] text-gray-300 font-medium">🌧 Áo mưa mỏng</div>
+    <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-gray-950 border border-gray-900 text-[13px] text-gray-300 font-medium">👟 Giày leo núi</div>
+    <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-gray-950 border border-gray-900 text-[13px] text-gray-300 font-medium">💊 Thuốc say xe</div>
+    <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-gray-950 border border-gray-900 text-[13px] text-gray-300 font-medium">💰 Tiền mặt đầy đủ</div>
+    <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-gray-950 border border-gray-900 text-[13px] text-gray-300 font-medium">🔋 Sạc dự phòng</div>
+    <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-gray-950 border border-gray-900 text-[13px] text-gray-300 font-medium">☀️ Kem chống nắng</div>
+    <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-gray-950 border border-gray-900 text-[13px] text-gray-300 font-medium">📱 Bản đồ offline</div>
   </div>
 </div>
 
-<footer class="foot">
-  <p>Made with &#9749; by Duong &amp; Claude &#183; Apr 2026</p>
-  <p style="margin-top:4px"><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">&#8593; Ve dau trang</a></p>
+<!-- ═══ FOOTER ═══ -->
+
+<footer class="text-center px-6 py-10 border-t border-gray-900">
+  <div class="text-[9px] font-bold tracking-[4px] uppercase text-gray-700 mb-2">Hà Giang → Cao Bằng → Lạng Sơn</div>
+  <p class="text-xs text-gray-500">Thiết kế bởi Dương &amp; Claude · Tháng 4, 2026</p>
+  <p class="mt-2"><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false" class="text-neon text-xs no-underline">↑ Về đầu trang</a></p>
 </footer>
 
 <script>
-function tog(e){e.parentElement.classList.toggle('open')}
-var lk=document.querySelectorAll('.nav a');
+function tog(e){e.closest('.day').classList.toggle('open')}
+var lk=document.querySelectorAll('.ntab');
 lk.forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t){window.scrollTo({top:t.offsetTop-document.getElementById('nav').offsetHeight-8,behavior:'smooth'})}})});
-var sc=document.querySelectorAll('[id^="d"],.budget');
-var ob=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&e.target.id){lk.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id)})}})},{threshold:0.3,rootMargin:'-80px 0px -50% 0px'});
-sc.forEach(function(s){ob.observe(s)});
+var ob=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&e.target.id){lk.forEach(function(a){if(a.getAttribute('href')==='#'+e.target.id){a.classList.add('text-neon','border-neon');a.classList.remove('text-gray-600','border-transparent')}else{a.classList.remove('text-neon','border-neon');a.classList.add('text-gray-600','border-transparent')}})}})},{threshold:0.2,rootMargin:'-80px 0px -50% 0px'});
+document.querySelectorAll('[id^="d"],.budget').forEach(function(s){if(s.id)ob.observe(s)});
+document.getElementById('cost')&&ob.observe(document.getElementById('cost'));
 </script>
 
 </body>
