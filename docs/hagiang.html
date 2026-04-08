@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Hà Giang → Cao Bằng → Lạng Sơn | Apr 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1114;
+  --surface: #181b20;
+  --surface2: #1e2228;
+  --border: #2a2f38;
+  --text: #e8e6e1;
+  --text-dim: #8a8d93;
+  --accent: #e8c46c;
+  --accent2: #c4956a;
+  --green: #6bcf8e;
+  --blue: #6ba3cf;
+  --red: #cf6b6b;
+  --orange: #cf9a6b;
+  --radius: 16px;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Be Vietnam Pro', -apple-system, sans-serif;
+}
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+font-family: var(–font-body);
+background: var(–bg);
+color: var(–text);
+line-height: 1.6;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+position: relative;
+min-height: 100svh;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+padding: 24px 20px 40px;
+overflow: hidden;
+}
+
+.hero::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+background:
+radial-gradient(ellipse at 30% 20%, rgba(232,196,108,0.08) 0%, transparent 60%),
+radial-gradient(ellipse at 70% 80%, rgba(107,163,207,0.06) 0%, transparent 50%),
+linear-gradient(180deg, var(–bg) 0%, transparent 30%, transparent 60%, var(–bg) 100%);
+z-index: 1;
+}
+
+.hero-bg-pattern {
+position: absolute;
+inset: 0;
+opacity: 0.03;
+background-image:
+repeating-linear-gradient(0deg, transparent, transparent 40px, var(–text) 40px, var(–text) 41px),
+repeating-linear-gradient(90deg, transparent, transparent 40px, var(–text) 40px, var(–text) 41px);
+z-index: 0;
+}
+
+.hero-content { position: relative; z-index: 2; }
+
+.hero-eyebrow {
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 16px;
+opacity: 0;
+animation: fadeUp 0.8s 0.3s forwards;
+}
+
+.hero h1 {
+font-family: var(–font-display);
+font-size: clamp(36px, 10vw, 56px);
+line-height: 1.1;
+color: var(–text);
+margin-bottom: 8px;
+opacity: 0;
+animation: fadeUp 0.8s 0.5s forwards;
+}
+
+.hero h1 em {
+font-style: italic;
+color: var(–accent);
+}
+
+.hero-subtitle {
+font-size: 15px;
+color: var(–text-dim);
+font-weight: 300;
+margin-bottom: 32px;
+opacity: 0;
+animation: fadeUp 0.8s 0.7s forwards;
+}
+
+.hero-stats {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1px;
+background: var(–border);
+border-radius: var(–radius);
+overflow: hidden;
+opacity: 0;
+animation: fadeUp 0.8s 0.9s forwards;
+}
+
+.hero-stat {
+background: var(–surface);
+padding: 16px 12px;
+text-align: center;
+}
+
+.hero-stat-value {
+font-family: var(–font-display);
+font-size: 24px;
+color: var(–accent);
+}
+
+.hero-stat-label {
+font-size: 10px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–text-dim);
+margin-top: 4px;
+}
+
+.scroll-hint {
+position: absolute;
+bottom: 12px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 2;
+opacity: 0;
+animation: fadeUp 0.8s 1.2s forwards;
+}
+
+.scroll-hint span {
+display: block;
+width: 2px;
+height: 24px;
+background: var(–accent);
+margin: 0 auto;
+border-radius: 2px;
+animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse {
+0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ── ROUTE OVERVIEW ── */
+.route-bar {
+position: sticky;
+top: 0;
+z-index: 100;
+background: rgba(15,17,20,0.92);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-bottom: 1px solid var(–border);
+padding: 0;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none;
+}
+.route-bar::-webkit-scrollbar { display: none; }
+
+.route-tabs {
+display: flex;
+min-width: max-content;
+padding: 0 16px;
+}
+
+.route-tab {
+flex-shrink: 0;
+padding: 14px 16px;
+font-size: 12px;
+font-weight: 500;
+color: var(–text-dim);
+cursor: pointer;
+border-bottom: 2px solid transparent;
+transition: all 0.3s;
+white-space: nowrap;
+-webkit-tap-highlight-color: transparent;
+}
+
+.route-tab.active {
+color: var(–accent);
+border-bottom-color: var(–accent);
+}
+
+/* ── DAY SECTIONS ── */
+.days { padding: 0 0 80px; }
+
+.day-section {
+border-bottom: 1px solid var(–border);
+}
+
+.day-header {
+padding: 32px 20px 24px;
+cursor: pointer;
+-webkit-tap-highlight-color: transparent;
+position: relative;
+}
+
+.day-date {
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 8px;
+}
+
+.day-title {
+font-family: var(–font-display);
+font-size: 24px;
+line-height: 1.2;
+margin-bottom: 6px;
+padding-right: 40px;
+}
+
+.day-route {
+font-size: 13px;
+color: var(–text-dim);
+font-weight: 300;
+}
+
+.day-route strong {
+color: var(–orange);
+font-weight: 500;
+}
+
+.day-toggle {
+position: absolute;
+right: 20px;
+top: 50%;
+transform: translateY(-50%);
+width: 32px;
+height: 32px;
+border-radius: 50%;
+background: var(–surface2);
+border: 1px solid var(–border);
+display: flex;
+align-items: center;
+justify-content: center;
+transition: transform 0.3s, background 0.3s;
+}
+
+.day-toggle svg {
+width: 14px;
+height: 14px;
+stroke: var(–text-dim);
+transition: transform 0.3s;
+}
+
+.day-section.open .day-toggle svg {
+transform: rotate(180deg);
+}
+
+.day-body {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.day-section.open .day-body {
+max-height: 3000px;
+}
+
+.day-content {
+padding: 0 20px 32px;
+}
+
+/* ── TIMELINE ── */
+.timeline {
+position: relative;
+padding-left: 28px;
+}
+
+.timeline::before {
+content: ‘’;
+position: absolute;
+left: 7px;
+top: 8px;
+bottom: 8px;
+width: 1px;
+background: linear-gradient(180deg, var(–accent) 0%, var(–border) 50%, var(–accent) 100%);
+}
+
+.tl-item {
+position: relative;
+padding-bottom: 24px;
+}
+
+.tl-item:last-child { padding-bottom: 0; }
+
+.tl-dot {
+position: absolute;
+left: -28px;
+top: 4px;
+width: 15px;
+height: 15px;
+border-radius: 50%;
+background: var(–bg);
+border: 2px solid var(–border);
+z-index: 1;
+}
+
+.tl-item.highlight .tl-dot {
+border-color: var(–accent);
+background: var(–accent);
+box-shadow: 0 0 12px rgba(232,196,108,0.3);
+}
+
+.tl-item.food .tl-dot { border-color: var(–orange); }
+.tl-item.culture .tl-dot { border-color: var(–green); }
+.tl-item.move .tl-dot { border-color: var(–blue); }
+.tl-item.sleep .tl-dot { border-color: var(–red); background: var(–red); }
+
+.tl-time {
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 1px;
+color: var(–text-dim);
+margin-bottom: 2px;
+}
+
+.tl-title {
+font-size: 15px;
+font-weight: 600;
+margin-bottom: 2px;
+}
+
+.tl-desc {
+font-size: 13px;
+color: var(–text-dim);
+font-weight: 300;
+line-height: 1.5;
+}
+
+.tl-tag {
+display: inline-block;
+font-size: 10px;
+font-weight: 600;
+letter-spacing: 1px;
+text-transform: uppercase;
+padding: 3px 8px;
+border-radius: 4px;
+margin-top: 6px;
+}
+
+.tl-tag.food { background: rgba(207,154,107,0.15); color: var(–orange); }
+.tl-tag.culture { background: rgba(107,207,142,0.15); color: var(–green); }
+.tl-tag.scenic { background: rgba(107,163,207,0.15); color: var(–blue); }
+.tl-tag.stay { background: rgba(207,107,107,0.15); color: var(–red); }
+
+/* ── TIP CARDS ── */
+.tip-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 14px 16px;
+margin-top: 20px;
+}
+
+.tip-card-label {
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 6px;
+}
+
+.tip-card p {
+font-size: 13px;
+color: var(–text-dim);
+font-weight: 300;
+line-height: 1.6;
+}
+
+/* ── BUDGET SUMMARY ── */
+.budget {
+margin: 0 20px;
+padding: 32px 0;
+}
+
+.budget h2 {
+font-family: var(–font-display);
+font-size: 22px;
+margin-bottom: 20px;
+}
+
+.budget-grid {
+display: flex;
+flex-direction: column;
+gap: 1px;
+background: var(–border);
+border-radius: var(–radius);
+overflow: hidden;
+margin-bottom: 16px;
+}
+
+.budget-row {
+display: flex;
+justify-content: space-between;
+padding: 14px 16px;
+background: var(–surface);
+font-size: 14px;
+}
+
+.budget-row.total {
+background: var(–surface2);
+font-weight: 700;
+}
+
+.budget-row .amount { color: var(–accent); font-weight: 600; }
+.budget-row.total .amount { font-size: 18px; }
+
+.budget-note {
+font-size: 12px;
+color: var(–text-dim);
+font-weight: 300;
+line-height: 1.6;
+}
+
+/* ── PACKING ── */
+.packing {
+margin: 0 20px;
+padding: 0 0 40px;
+}
+
+.packing h2 {
+font-family: var(–font-display);
+font-size: 22px;
+margin-bottom: 16px;
+}
+
+.pack-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
+}
+
+.pack-item {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 12px;
+font-size: 13px;
+font-weight: 400;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.pack-icon { font-size: 16px; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+.footer {
+text-align: center;
+padding: 32px 20px;
+border-top: 1px solid var(–border);
+font-size: 12px;
+color: var(–text-dim);
+}
+
+.footer a { color: var(–accent); text-decoration: none; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+opacity: 0;
+transform: translateY(16px);
+transition: opacity 0.6s, transform 0.6s;
+}
+
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* ── UTILITIES ── */
+::selection { background: rgba(232,196,108,0.3); }
+::-webkit-scrollbar { width: 0; }
+</style>
+
+</head>
+<body>
+
+<!-- ════ HERO ════ -->
+
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Đông Bắc Việt Nam · Tháng 4.2026</div>
+    <h1>Hà Giang →<br><em>Cao Bằng</em><br>→ Lạng Sơn</h1>
+    <p class="hero-subtitle">Duong &amp; Long — 6 đêm xuyên cao nguyên đá,<br>bản làng dân tộc &amp; biên cương Tổ Quốc</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value">6</div>
+        <div class="hero-stat-label">Ngày</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">~800</div>
+        <div class="hero-stat-label">KM</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">5</div>
+        <div class="hero-stat-label">Tỉnh</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span></span></div>
+</section>
+
+<!-- ════ STICKY NAV ════ -->
+
+<nav class="route-bar" id="routeBar">
+  <div class="route-tabs">
+    <div class="route-tab active" data-target="day0">Đêm 0</div>
+    <div class="route-tab" data-target="day1">Ngày 1</div>
+    <div class="route-tab" data-target="day2">Ngày 2</div>
+    <div class="route-tab" data-target="day3">Ngày 3</div>
+    <div class="route-tab" data-target="day4">Ngày 4</div>
+    <div class="route-tab" data-target="day5">Ngày 5</div>
+    <div class="route-tab" data-target="budget">Chi phí</div>
+  </div>
+</nav>
+
+<!-- ════ DAYS ════ -->
+
+<div class="days">
+
+  <!-- ─── ĐÊM 0 ─── -->
+
+  <section class="day-section open" id="day0">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-date">Đêm 7/4 — Rạng sáng 8/4</div>
+      <div class="day-title">Hà Nội → Hà Giang</div>
+      <div class="day-route">Xe cabin giường nằm · <strong>~300km</strong></div>
+      <div class="day-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="day-body">
+      <div class="day-content">
+        <div class="timeline">
+          <div class="tl-item move">
+            <div class="tl-dot"></div>
+            <div class="tl-time">22:00</div>
+            <div class="tl-title">Lên xe cabin giường nằm</div>
+            <div class="tl-desc">Nội Bài / Hà Nội → TP Hà Giang. Ngủ trên xe qua đêm.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">~03:00</div>
+            <div class="tl-title">Đến TP Hà Giang</div>
+            <div class="tl-desc">Nghỉ ngơi tại quán café, chờ trời sáng.</div>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">06:00</div>
+            <div class="tl-title">Check-in Cột mốc KM0</div>
+            <div class="tl-desc">Điểm bắt đầu huyền thoại của cung đường Hạnh Phúc.</div>
+            <span class="tl-tag scenic">Điểm check-in</span>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">07:00</div>
+            <div class="tl-title">Ăn sáng — Bún Vịt Làng</div>
+            <div class="tl-desc">Bún vịt đặc sản Hà Giang, nước dùng đậm đà.</div>
+            <span class="tl-tag food">Ẩm thực</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NGÀY 1 ─── -->
+
+  <section class="day-section" id="day1">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-date">Ngày 1 · 8/4 (Thứ Tư)</div>
+      <div class="day-title">Cao nguyên đá Đồng Văn</div>
+      <div class="day-route">Hà Giang → Quản Bạ → Đồng Văn · <strong>~160km</strong></div>
+      <div class="day-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="day-body">
+      <div class="day-content">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">08:00</div>
+            <div class="tl-title">Dốc Bắc Sum</div>
+            <div class="tl-desc">Ngắm mây sớm, cung đường mở ra cao nguyên.</div>
+            <span class="tl-tag scenic">Cảnh đẹp</span>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">09:00</div>
+            <div class="tl-title">Núi Đôi Quản Bạ</div>
+            <div class="tl-desc">Biểu tượng Hà Giang — hai ngọn núi cân đối giữa thung lũng Tam Sơn.</div>
+            <span class="tl-tag scenic">Cảnh đẹp</span>
+          </div>
+          <div class="tl-item culture">
+            <div class="tl-dot"></div>
+            <div class="tl-time">10:00</div>
+            <div class="tl-title">Làng dệt lanh Lùng Tám</div>
+            <div class="tl-desc">Xem phụ nữ H'Mông dệt lanh truyền thống, trò chuyện với nghệ nhân.</div>
+            <span class="tl-tag culture">Văn hoá</span>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">11:00</div>
+            <div class="tl-title">Cây nghiến cô đơn</div>
+            <div class="tl-desc">Cây cổ thụ giữa đồi, icon sống ảo nổi tiếng.</div>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">12:00</div>
+            <div class="tl-title">Ăn trưa quán địa phương</div>
+            <div class="tl-desc">Thắng cố, mèn mén, rượu ngô — ẩm thực vùng cao nguyên bản.</div>
+            <span class="tl-tag food">Ẩm thực</span>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">13:00</div>
+            <div class="tl-title">Dốc Thẩm Mã</div>
+            <div class="tl-desc">Con đường uốn lượn giữa núi đá — một trong những cung đèo đẹp nhất Việt Nam.</div>
+            <span class="tl-tag scenic">Cảnh đẹp</span>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">14:00</div>
+            <div class="tl-title">Café view núi — Phố Cáo</div>
+            <div class="tl-desc">Nghỉ chân giữa mây trời, cà phê pha phin giữa bốn bề núi đá.</div>
+          </div>
+          <div class="tl-item culture">
+            <div class="tl-dot"></div>
+            <div class="tl-time">14:40</div>
+            <div class="tl-title">Làng cổ Lũng Cẩm – Sủng Là</div>
+            <div class="tl-desc">Bối cảnh phim "Chuyện của Pao". Nhà trình tường rêu phong, vườn đào, hoa cải.</div>
+            <span class="tl-tag culture">Văn hoá</span>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">15:30</div>
+            <div class="tl-title">Dinh Vua Mèo (Nhà Vương)</div>
+            <div class="tl-desc">Dinh thự kiến trúc Trung Hoa–H'Mông, chứng tích "vua" cai quản vùng cao nguyên đá.</div>
+            <span class="tl-tag culture">Di tích</span>
+          </div>
+          <div class="tl-item sleep">
+            <div class="tl-dot"></div>
+            <div class="tl-time">17:30</div>
+            <div class="tl-title">Homestay Đồng Văn / Lô Lô Chải / Thèn Pả</div>
+            <div class="tl-desc">Nghỉ đêm tại bản, trò chuyện với gia đình người Lô Lô.</div>
+            <span class="tl-tag stay">Nghỉ đêm</span>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Tối</div>
+            <div class="tl-title">Ăn tối Đồng Văn</div>
+            <div class="tl-desc">Lạp xưởng gác bếp, rau cải mèo, rượu ngô nấu chảo.</div>
+            <span class="tl-tag food">Ẩm thực</span>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-card-label">💡 Lưu ý</div>
+          <p>Thuê xe ô tô cùng Duy cho cả cung. Ngày 1 có ~8 điểm dừng — mỗi nơi không nên quá 30 phút để kịp lịch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NGÀY 2 ─── -->
+
+  <section class="day-section" id="day2">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-date">Ngày 2 · 9/4 (Thứ Năm)</div>
+      <div class="day-title">Đồng Văn deep dive</div>
+      <div class="day-route">Đồng Văn → Mèo Vạc · <strong>~50km</strong></div>
+      <div class="day-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="day-body">
+      <div class="day-content">
+        <div class="timeline">
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">06:00</div>
+            <div class="tl-title">Ăn sáng</div>
+            <div class="tl-desc">Phở chua Đồng Văn — đặc sản chỉ có ở vùng này.</div>
+            <span class="tl-tag food">Ẩm thực</span>
+          </div>
+          <div class="tl-item culture">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Sáng</div>
+            <div class="tl-title">Làng chạm bạc Lao Xa</div>
+            <div class="tl-desc">Nghệ nhân H'Mông chạm bạc thủ công — xem quá trình từ thỏi bạc đến trang sức tinh xảo.</div>
+            <span class="tl-tag culture">Làng nghề</span>
+          </div>
+          <div class="tl-item culture">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Sáng</div>
+            <div class="tl-title">Làng cổ Thiên Hương</div>
+            <div class="tl-desc">Bản làng trình tường cổ kính, bình yên giữa thung lũng đá.</div>
+            <span class="tl-tag culture">Văn hoá</span>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Trưa</div>
+            <div class="tl-title">Ăn trưa Đồng Văn</div>
+            <div class="tl-desc">Thịt trâu gác bếp, cháo ấu tẩu, rau rừng.</div>
+            <span class="tl-tag food">Ẩm thực</span>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Chiều</div>
+            <div class="tl-title">Khám phá bản làng cao nguyên đá</div>
+            <div class="tl-desc">Đi bộ lang thang qua các bản, giao lưu với người Mông, Lô Lô.</div>
+            <span class="tl-tag culture">Trải nghiệm</span>
+          </div>
+          <div class="tl-item sleep">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Tối</div>
+            <div class="tl-title">Nghỉ đêm Mèo Vạc</div>
+            <div class="tl-desc">Homestay hoặc nhà nghỉ trung tâm thị trấn.</div>
+            <span class="tl-tag stay">Nghỉ đêm</span>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Tối</div>
+            <div class="tl-title">Ăn tối Mèo Vạc</div>
+            <div class="tl-desc">Gà đen, lẩu thắng cố bò, rượu mèn mén.</div>
+            <span class="tl-tag food">Ẩm thực</span>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-card-label">💡 Ngày thong thả</div>
+          <p>Ngày 2 ít di chuyển, tập trung trải nghiệm làng nghề & bản địa. Nghỉ sớm để lấy sức cho ngày 3 dài.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NGÀY 3 ─── -->
+
+  <section class="day-section" id="day3">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-date">Ngày 3 · 10/4 (Thứ Sáu)</div>
+      <div class="day-title">Hẻm Tu Sản &<br>Bản Lô Lô Đen</div>
+      <div class="day-route">Mèo Vạc → Bảo Lạc · <strong>~150km · 5h lái</strong></div>
+      <div class="day-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="day-body">
+      <div class="day-content">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">06:30</div>
+            <div class="tl-title">Café Panorama / Mí Pó</div>
+            <div class="tl-desc">View sông Nho Quế từ trên cao — bình minh trên hẻm vực.</div>
+            <span class="tl-tag scenic">Cảnh đẹp</span>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">07:30</div>
+            <div class="tl-title">Đi thuyền Hẻm Tu Sản</div>
+            <div class="tl-desc">Hẻm vực sâu nhất Đông Nam Á. Sông Nho Quế xanh ngọc bích luồn qua vách đá dựng đứng.</div>
+            <span class="tl-tag scenic">Highlight</span>
+          </div>
+          <div class="tl-item move">
+            <div class="tl-dot"></div>
+            <div class="tl-time">10:00</div>
+            <div class="tl-title">Xuất phát → Bảo Lâm</div>
+            <div class="tl-desc">Mèo Vạc → ngã ba QL34 (55km, QL4C). Cung đường nhựa đẹp, vắng xe.</div>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">12:00</div>
+            <div class="tl-title">Ăn trưa Bảo Lâm</div>
+            <div class="tl-desc">Thắng cố, phở chua, khâu nhục — phiên bản Cao Bằng.</div>
+            <span class="tl-tag food">Ẩm thực</span>
+          </div>
+          <div class="tl-item move">
+            <div class="tl-dot"></div>
+            <div class="tl-time">13:30</div>
+            <div class="tl-title">Bảo Lâm → Bảo Lạc</div>
+            <div class="tl-desc">QL34 qua rừng trúc xanh ngút ngàn, bản làng Dao, Sán Chỉ.</div>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">16:00</div>
+            <div class="tl-title">Bản Khuổi Khon — Người Lô Lô Đen</div>
+            <div class="tl-desc">Homestay cộng đồng duy nhất của dân tộc Lô Lô Đen tại xã Kim Cúc. Trải nghiệm văn hoá, trang phục, nhạc cụ truyền thống.</div>
+            <span class="tl-tag culture">Highlight trải nghiệm</span>
+          </div>
+          <div class="tl-item sleep">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Tối</div>
+            <div class="tl-title">Nghỉ đêm Homestay Lô Lô Đen</div>
+            <div class="tl-desc">Ăn tối cùng gia đình: thịt lợn treo gác bếp, xôi ngũ sắc, cá sông Gâm, rượu ngô. Nghe kể chuyện bản.</div>
+            <span class="tl-tag stay">Nghỉ đêm</span>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-card-label">🏔 Cung đường</div>
+          <p>Đoạn Mèo Vạc → Bảo Lâm đường tốt, sedan đi được. Bảo Lâm → Bảo Lạc có vài đoạn giáp danh hơi xấu nhưng đã cải thiện nhiều. Liên hệ trước bản Khuổi Khon để book homestay.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NGÀY 4 ─── -->
+
+  <section class="day-section" id="day4">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-date">Ngày 4 · 11/4 (Thứ Bảy)</div>
+      <div class="day-title">Đèo 14 tầng, Pác Bó<br>& Thác Bản Giốc</div>
+      <div class="day-route">Bảo Lạc → Pác Bó → Trùng Khánh · <strong>~220km</strong></div>
+      <div class="day-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="day-body">
+      <div class="day-content">
+        <div class="timeline">
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">06:30</div>
+            <div class="tl-title">Ăn sáng, chia tay bản Khuổi Khon</div>
+            <div class="tl-desc">Xôi nếp nương, trứng gà bản.</div>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">07:30</div>
+            <div class="tl-title">Đèo Mẻ Pia — 14 tầng</div>
+            <div class="tl-desc">Bảo Lạc → Xuân Trường (QL4A). Đèo dốc đá hiểm trở, uốn 14 tầng — leo 30 phút lên viewpoint để chụp toàn cảnh.</div>
+            <span class="tl-tag scenic">Highlight</span>
+          </div>
+          <div class="tl-item move">
+            <div class="tl-dot"></div>
+            <div class="tl-time">09:00</div>
+            <div class="tl-title">Thông Nông → Hà Quảng</div>
+            <div class="tl-desc">Tiếp tục QL4A về phía đông. Đường trên cung, không quay lại.</div>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">09:30</div>
+            <div class="tl-title">Suối Lê Nin — Hang Pác Bó</div>
+            <div class="tl-desc">Di tích cách mạng: nơi Bác Hồ sống và hoạt động khi mới về nước 1941. Suối Lê Nin, Núi Các Mác, hang Cốc Bó, bàn đá chông chênh.</div>
+            <span class="tl-tag culture">Di tích lịch sử</span>
+          </div>
+          <div class="tl-item move">
+            <div class="tl-dot"></div>
+            <div class="tl-time">11:00</div>
+            <div class="tl-title">Hà Quảng → TP Cao Bằng</div>
+            <div class="tl-desc">~46km, 1 tiếng. Ghé chợ Cao Bằng nếu kịp.</div>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">12:00</div>
+            <div class="tl-title">Ăn trưa TP Cao Bằng</div>
+            <div class="tl-desc">Bánh cuốn Cao Bằng (nhân trứng kiến mùa này!), phở chua, vịt quay 7 vị Cao Bằng.</div>
+            <span class="tl-tag food">Ẩm thực đặc sản</span>
+          </div>
+          <div class="tl-item move">
+            <div class="tl-dot"></div>
+            <div class="tl-time">13:30</div>
+            <div class="tl-title">TP Cao Bằng → Trùng Khánh</div>
+            <div class="tl-desc">~67km, 1.5h. Qua đèo Mã Phục (đèo 7 tầng), cảnh đẹp.</div>
+          </div>
+          <div class="tl-item highlight">
+            <div class="tl-dot"></div>
+            <div class="tl-time">15:00</div>
+            <div class="tl-title">Thác Bản Giốc</div>
+            <div class="tl-desc">Thác nước tự nhiên lớn nhất Đông Nam Á, biên giới Việt–Trung. Tháng 4 nước xanh trong, thác đổ dịu dàng. Có thể đi thuyền bè sát chân thác.</div>
+            <span class="tl-tag scenic">Highlight</span>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">16:00</div>
+            <div class="tl-title">Động Ngườm Ngao + Núi Thủng</div>
+            <div class="tl-desc">Hang động thạch nhũ 2km (cách Bản Giốc 3km). "Ngườm Ngao" = Hang Hổ (tiếng Tày).</div>
+            <span class="tl-tag scenic">Cảnh đẹp</span>
+          </div>
+          <div class="tl-item sleep">
+            <div class="tl-dot"></div>
+            <div class="tl-time">17:30</div>
+            <div class="tl-title">Homestay Làng đá Khuổi Ky</div>
+            <div class="tl-desc">14 ngôi nhà sàn đá 400 năm tuổi của người Tày, nằm giữa Bản Giốc và Ngườm Ngao. Trải nghiệm đời sống Tày, nghe suối chảy, ngắm sao.</div>
+            <span class="tl-tag stay">Nghỉ đêm</span>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Tối</div>
+            <div class="tl-title">Ăn tối Khuổi Ky / Trùng Khánh</div>
+            <div class="tl-desc">Hạt dẻ Trùng Khánh nướng, cá suối nấu măng, lợn quay lá mắc mật, bánh khảo.</div>
+            <span class="tl-tag food">Ẩm thực đặc sản</span>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-card-label">🔑 Cung đường tối ưu</div>
+          <p>Bảo Lạc → Đèo Mẻ Pia → Thông Nông → Pác Bó → TP CB → Trùng Khánh — tất cả trên đường, KHÔNG quay lại. Đây là thay đổi quan trọng nhất so với lịch gốc, tiết kiệm ~3h backtrack.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NGÀY 5 ─── -->
+
+  <section class="day-section" id="day5">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-date">Ngày 5 · 12/4 (Chủ Nhật)</div>
+      <div class="day-title">Thạch An → Lạng Sơn<br>→ Bay về</div>
+      <div class="day-route">Trùng Khánh → Lạng Sơn → Nội Bài · <strong>~250km</strong></div>
+      <div class="day-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="day-body">
+      <div class="day-content">
+        <div class="timeline">
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">07:00</div>
+            <div class="tl-title">Ăn sáng Trùng Khánh</div>
+            <div class="tl-desc">Phở vịt quay, bánh cuốn trứng.</div>
+          </div>
+          <div class="tl-item culture">
+            <div class="tl-dot"></div>
+            <div class="tl-time">08:00</div>
+            <div class="tl-title">Thạch An — Làng làm thạch đen</div>
+            <div class="tl-desc">Xem dân làng chế biến thạch đen truyền thống từ lá cây — đặc sản nổi tiếng Cao Bằng.</div>
+            <span class="tl-tag culture">Làng nghề</span>
+          </div>
+          <div class="tl-item move">
+            <div class="tl-dot"></div>
+            <div class="tl-time">10:00</div>
+            <div class="tl-title">Thạch An → Lạng Sơn</div>
+            <div class="tl-desc">~90km, 2 tiếng. Đường QL4A/4B qua vùng núi đá vôi.</div>
+          </div>
+          <div class="tl-item food">
+            <div class="tl-dot"></div>
+            <div class="tl-time">12:00</div>
+            <div class="tl-title">Ăn trưa Lạng Sơn</div>
+            <div class="tl-desc">Phở vịt quay Lạng Sơn, khâu nhục, bánh áp chao. Bữa cuối trước khi về!</div>
+            <span class="tl-tag food">Ẩm thực</span>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Chiều</div>
+            <div class="tl-title">Mẫu Sơn / Làng Đá (nếu kịp)</div>
+            <div class="tl-desc">Tùy giờ bay, có thể ghé nhanh.</div>
+          </div>
+          <div class="tl-item move">
+            <div class="tl-dot"></div>
+            <div class="tl-time">Tối</div>
+            <div class="tl-title">Duy chở ra sân bay Nội Bài</div>
+            <div class="tl-desc">Lạng Sơn → Nội Bài ~160km, cao tốc ~2.5h. Kết thúc hành trình!</div>
+            <span class="tl-tag scenic">Về nhà</span>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-card-label">✈️ Lưu ý bay</div>
+          <p>Book vé bay tối muộn (21h+) để có đủ thời gian. Hoặc nếu Duy chở thẳng ra sân bay từ Lạng Sơn, tính thêm 2.5h cao tốc.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════ CHI PHÍ ════ -->
+
+<section class="budget reveal" id="budget">
+  <h2>Chi phí dự kiến <em style="font-style:italic;color:var(--accent)">/người</em></h2>
+  <div class="budget-grid">
+    <div class="budget-row"><span>🚌 Xe cabin HN→HG</span><span class="amount">700K</span></div>
+    <div class="budget-row"><span>🏠 Homestay 4 đêm</span><span class="amount">2.400K</span></div>
+    <div class="budget-row"><span>🍜 Ăn uống (~5 ngày)</span><span class="amount">2.500K</span></div>
+    <div class="budget-row"><span>🎫 Vé tham quan</span><span class="amount">500K</span></div>
+    <div class="budget-row"><span>🛶 Thuyền Tu Sản</span><span class="amount">300K</span></div>
+    <div class="budget-row"><span>☕ Café &amp; linh tinh</span><span class="amount">500K</span></div>
+    <div class="budget-row"><span>🚗 Xe (chia 3 với Duy)</span><span class="amount">1.500K</span></div>
+    <div class="budget-row total"><span>TỔNG ƯỚC TÍNH</span><span class="amount">~8.400K</span></div>
+  </div>
+  <p class="budget-note">* Chi phí xe tính chia 3 người (tổng 4.500K/5 ngày). Chưa bao gồm vé máy bay về HCM. Mang đủ tiền mặt — vùng cao ít ATM.</p>
+</section>
+
+<!-- ════ PACKING ════ -->
+
+<section class="packing reveal">
+  <h2>Mang theo</h2>
+  <div class="pack-grid">
+    <div class="pack-item"><span class="pack-icon">🧥</span>Áo gió / áo ấm</div>
+    <div class="pack-item"><span class="pack-icon">🌧</span>Áo mưa mỏng</div>
+    <div class="pack-item"><span class="pack-icon">👟</span>Giày leo núi</div>
+    <div class="pack-item"><span class="pack-icon">💊</span>Thuốc say xe</div>
+    <div class="pack-item"><span class="pack-icon">💰</span>Tiền mặt đủ</div>
+    <div class="pack-item"><span class="pack-icon">🔋</span>Pin sạc dự phòng</div>
+    <div class="pack-item"><span class="pack-icon">🧴</span>Kem chống nắng</div>
+    <div class="pack-item"><span class="pack-icon">📱</span>Offline map</div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+
+<footer class="footer">
+  <p>Made with ☕ by Duong &amp; Claude · Apr 2026</p>
+  <p style="margin-top:4px"><a href="#">↑ Về đầu trang</a></p>
+</footer>
+
+<script>
+function toggleDay(header) {
+  const section = header.parentElement;
+  section.classList.toggle('open');
+}
+
+// Sticky nav active state
+const tabs = document.querySelectorAll('.route-tab');
+const sections = document.querySelectorAll('.day-section, .budget');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = document.getElementById(tab.dataset.target);
+    if (target) {
+      const offset = document.getElementById('routeBar').offsetHeight;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset - 8;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+// Intersection observer for active tab + reveal animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      // Reveal animation
+      if (entry.target.classList.contains('reveal')) {
+        entry.target.classList.add('visible');
+      }
+      // Active tab
+      const id = entry.target.id;
+      if (id) {
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.target === id));
+        // Auto-scroll tab into view
+        const activeTab = document.querySelector(`.route-tab[data-target="${id}"]`);
+        if (activeTab) {
+          activeTab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      }
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+
+sections.forEach(s => observer.observe(s));
+document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+// Footer back to top
+document.querySelector('.footer a').addEventListener('click', (e) => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
+</body>
+</html>
